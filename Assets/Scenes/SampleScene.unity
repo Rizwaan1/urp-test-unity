@@ -3298,9 +3298,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 229214878}
-  chaseRange: 22.2
+  chaseRange: 16.5
   attackRange: 15.7
-  attackRate: 0.5
+  attackRate: 0.1
   attackDamage: 10
   bulletPrefab: {fileID: 3835600888402462194, guid: 276cb53edd48f3d4e90b8cbd13a18fd6,
     type: 3}
@@ -3506,6 +3506,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198999771780041344, guid: 47108975a2d7f6f439137bcd19fdc962,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 7.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 198999771780041344, guid: 47108975a2d7f6f439137bcd19fdc962,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 7.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 198999771780041344, guid: 47108975a2d7f6f439137bcd19fdc962,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 7.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 198999771780041344, guid: 47108975a2d7f6f439137bcd19fdc962,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -44.443436
       objectReference: {fileID: 0}
@@ -3553,6 +3568,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198999771780041344, guid: 47108975a2d7f6f439137bcd19fdc962,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 687130516425871418, guid: 47108975a2d7f6f439137bcd19fdc962,
         type: 3}
