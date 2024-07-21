@@ -7,11 +7,13 @@ public class Computer : MonoBehaviour, IInteractable
     public AudioSource source;
     public AudioClip ComputerSound;
     public GameObject uiPanel; // Reference to the UI Panel that you want to show
+    private PlayerController playerController; // Reference to the player's script
 
     // Start is called before the first frame update
     void Start()
     {
-        // source = GetComponent<AudioSource>();
+        // Find the player object and get the PlayerController component
+        playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -25,11 +27,10 @@ public class Computer : MonoBehaviour, IInteractable
         // Play the computer sound
         source.PlayOneShot(ComputerSound);
 
-        // Unlock the mouse cursor
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
 
         // Show the UI Panel
         uiPanel.SetActive(true);
+
+
     }
 }
