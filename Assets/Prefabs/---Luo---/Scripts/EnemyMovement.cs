@@ -6,16 +6,25 @@ using UnityEngine.Rendering;
 
 public class EnemyMovement : MonoBehaviour
 {
+
     public Transform playerTarget;
     private NavMeshAgent navMeshAgent;
+
+    [Header(" Tank Attacks")]
     private RCUAttack rcuAttack;
 
+    [Header(" Tank Aggro")]
     private float distanceToPlayer = Mathf.Infinity;
     public float chaseRange = 10f;
     public float stopRange = 7f;
 
+    [Header(" Tank CanAttack")]
     public bool isFrozen = false;
     public bool isAggro = false;
+
+    
+    
+
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -33,6 +42,7 @@ public class EnemyMovement : MonoBehaviour
                 isAggro = true;
                 aggroCurrentTime = 0;
 
+
                 Debug.Log("Within ChaseRange");
                 navMeshAgent.isStopped = false;
                 navMeshAgent.SetDestination(playerTarget.position);
@@ -40,12 +50,15 @@ public class EnemyMovement : MonoBehaviour
                 if(distanceToPlayer <= stopRange)
                 {
                     navMeshAgent.isStopped = true;
+
                     Debug.Log("Within StopRange");
                 }
                 else
                     navMeshAgent.isStopped = false;
             }
-        }        
+        }
+
+      
     }
 
     //Aggro Variables
@@ -56,8 +69,9 @@ public class EnemyMovement : MonoBehaviour
         AggroTimer();
         if (isAggro)
         {
+            
             rcuAttack.firingState = RCUAttack.FiringState.FireVolley;           
-                navMeshAgent.isStopped = false;
+            navMeshAgent.isStopped = false;
             navMeshAgent.SetDestination(playerTarget.position);
         }
         else
@@ -93,4 +107,6 @@ public class EnemyMovement : MonoBehaviour
         Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(transform.position, chaseRange);
     }
+
+    
 }
