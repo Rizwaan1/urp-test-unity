@@ -85,9 +85,12 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, chaseRange);
+        //Gizmos.color = Color.yellow;
+       //Gizmos.DrawWireSphere(transform.position, chaseRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, stopRange);
+
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(transform.position, chaseRange);
     }
 }
