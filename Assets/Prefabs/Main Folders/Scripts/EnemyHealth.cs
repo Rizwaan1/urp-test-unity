@@ -29,7 +29,7 @@ public class EnemyHealth : MonoBehaviour
     {
         health -= amount;
         source.PlayOneShot(DamageClip);
-        StartCoroutine(DamageEffect());
+        //StartCoroutine(DamageEffect());
         UpdateHealthUI(); // Update de UI tekst bij schade
 
         if (health <= 0f)
