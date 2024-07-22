@@ -10678,12 +10678,12 @@ PrefabInstance:
     - target: {fileID: 834779297232345539, guid: 524c407264025ba4582b09138c9ef779,
         type: 3}
       propertyPath: m_SelectedEdges.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 834779297232345539, guid: 524c407264025ba4582b09138c9ef779,
         type: 3}
       propertyPath: m_SelectedFaces.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 834779297232345539, guid: 524c407264025ba4582b09138c9ef779,
         type: 3}
@@ -11898,7 +11898,7 @@ PrefabInstance:
     - target: {fileID: 834779297232345539, guid: 524c407264025ba4582b09138c9ef779,
         type: 3}
       propertyPath: m_SelectedVertices.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 834779297232345539, guid: 524c407264025ba4582b09138c9ef779,
         type: 3}
@@ -30746,6 +30746,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 17969856218896370, guid: d29ddf52831e89e4fabd594e9586aa76,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1043140395060736233, guid: d29ddf52831e89e4fabd594e9586aa76,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -30849,12 +30854,12 @@ PrefabInstance:
     - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
         type: 3}
       propertyPath: canShoot
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
         type: 3}
       propertyPath: fireRate
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
         type: 3}
@@ -30872,6 +30877,16 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 221064675}
+    - target: {fileID: 7508832994340338470, guid: d29ddf52831e89e4fabd594e9586aa76,
+        type: 3}
+      propertyPath: stopRange
+      value: 7.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 7508832994340338470, guid: d29ddf52831e89e4fabd594e9586aa76,
+        type: 3}
+      propertyPath: chaseRange
+      value: 9.23
+      objectReference: {fileID: 0}
     - target: {fileID: 7508832994340338470, guid: d29ddf52831e89e4fabd594e9586aa76,
         type: 3}
       propertyPath: playerTarget

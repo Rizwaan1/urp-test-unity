@@ -12,7 +12,7 @@ public class RCUAttack : MonoBehaviour
 
     private float nextTimeToFire = 0f;
 
-    public bool canShoot;
+    
 
     public enum FiringState
     {
@@ -30,22 +30,15 @@ public class RCUAttack : MonoBehaviour
     {
         switch (firingState)
         {
-            case FiringState.Idle: break;
+            case FiringState.Idle: IdleState(); break;
 
-            case FiringState.FireVolley: break;
+            case FiringState.FireVolley: FireVolleyAttack(); break;
 
             default:
-                firingState = FiringState.Idle; break;
+                firingState = FiringState.Idle; IdleState(); break;
         }
 
-        if (canShoot)
-        {
-            if (Time.time >= nextTimeToFire)
-            {
-                nextTimeToFire = Time.time + 1f / fireRate;
-                Shoot();
-            }
-        }
+      
     }
 
     private void IdleState()
@@ -55,7 +48,14 @@ public class RCUAttack : MonoBehaviour
 
     private void FireVolleyAttack()
     {
+       
+            if (Time.time >= nextTimeToFire)
+            {
+                nextTimeToFire = Time.time + 1f / fireRate;
+                Shoot();
+            }
         
+
         Debug.Log("Is Attacking" + tankTransform);
     }
 
