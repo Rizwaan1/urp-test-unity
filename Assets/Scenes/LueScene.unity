@@ -7349,6 +7349,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &870793363 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4315474574281751133, guid: d29ddf52831e89e4fabd594e9586aa76,
+    type: 3}
+  m_PrefabInstance: {fileID: 1713558302}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &907132401
 GameObject:
   m_ObjectHideFlags: 0
@@ -30187,13 +30193,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
         type: 3}
+      propertyPath: source
+      value: 
+      objectReference: {fileID: 639765684}
+    - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
+        type: 3}
       propertyPath: canShoot
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
         type: 3}
       propertyPath: fireRate
-      value: 5
+      value: 19.5
       objectReference: {fileID: 0}
     - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
         type: 3}
@@ -30202,10 +30213,30 @@ PrefabInstance:
       objectReference: {fileID: 31419582}
     - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
         type: 3}
+      propertyPath: alarmSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 47b7464384140174c8019148130b1c53, type: 3}
+    - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
+        type: 3}
+      propertyPath: firePointL
+      value: 
+      objectReference: {fileID: 870793363}
+    - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
+        type: 3}
+      propertyPath: firePointR
+      value: 
+      objectReference: {fileID: 31419582}
+    - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
+        type: 3}
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 3233885612632488077, guid: 778938655815d3a489d38911b0a661b2,
         type: 3}
+    - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
+        type: 3}
+      propertyPath: bulletsToFire
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6505691549734830833, guid: d29ddf52831e89e4fabd594e9586aa76,
         type: 3}
       propertyPath: target
