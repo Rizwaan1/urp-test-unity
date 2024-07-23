@@ -19,7 +19,7 @@ public class EnemyHealth : MonoBehaviour
     void Start()
     {
         enemyRenderer = GetComponent<Renderer>();
-        originalColor = enemyRenderer.material.color;
+        //originalColor = enemyRenderer.material.color;
         originalScale = transform.localScale;
 
         UpdateHealthUI(); // Zorg ervoor dat de UI tekst correct is bij de start
