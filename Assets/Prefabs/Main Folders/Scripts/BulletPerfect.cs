@@ -9,6 +9,10 @@ public class BulletPerfect : MonoBehaviour
     public GameObject bulletVisual, explosionPrefab;
     public Transform bulletTransform;
 
+
+    public bool forPlayer,forEnemy;
+    
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -26,6 +30,7 @@ public class BulletPerfect : MonoBehaviour
         // Vernietig de kogel na impact
         Destroy(bulletVisual);
         Destroy(gameObject);
+        
     }
 
     void HandleCollision(Collision collision)
@@ -33,18 +38,40 @@ public class BulletPerfect : MonoBehaviour
         // Instantiate explosie effect
         Instantiate(explosionPrefab, bulletTransform.position, bulletTransform.rotation);
 
-        // Logica voor het raken van een vijand
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (forPlayer)
         {
-            // Voorbeeld van het toebrengen van schade aan een vijand
-            EnemyHealth enemy = collision.gameObject.GetComponent<EnemyHealth>();
-            if (enemy != null)
+
+            // Logica voor het raken van een vijand
+            if (collision.gameObject.CompareTag("Player"))
             {
-                enemy.TakeDamage(damage); // Schade toebrengen aan de vijand
+                // Voorbeeld van het toebrengen van schade aan een vijand
+                PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
+                if (player != null)
+                {
+                    player.TakeDamage(damage); // Schade toebrengen aan de vijand
+                }
             }
+
+            // Andere logica voor andere soorten objecten kan hier ook worden toegevoegd
+            Debug.Log("Bullet hit: " + collision.gameObject.name);
         }
 
-        // Andere logica voor andere soorten objecten kan hier ook worden toegevoegd
-        Debug.Log("Bullet hit: " + collision.gameObject.name);
+        
+
+            // Logica voor het raken van een vijand
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                // Voorbeeld van het toebrengen van schade aan een vijand
+                EnemyHealth enemy = collision.gameObject.GetComponent<EnemyHealth>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(damage); // Schade toebrengen aan de vijand
+                }
+            }
+
+            // Andere logica voor andere soorten objecten kan hier ook worden toegevoegd
+            Debug.Log("Bullet hit: " + collision.gameObject.name);
+       
+       
     }
 }

@@ -29,6 +29,8 @@ public class GunScript : MonoBehaviour
     public bool rayCast;
     public bool instantiateFire;
 
+    public CameraShake cameraShake;
+
     void Start()
     {
         initialPosition = transform.localPosition;
@@ -58,6 +60,7 @@ public class GunScript : MonoBehaviour
                 if (rayCast)
                 {
                     ShootRaycast();
+
 
                 }
 
@@ -116,7 +119,7 @@ public class GunScript : MonoBehaviour
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
             Debug.Log(hit.transform.name);
-
+            StartCoroutine(cameraShake.Shake(0.1f, 0.2f));
             EnemyHealth enemy = hit.transform.GetComponent<EnemyHealth>();
             if (enemy != null)
             {
@@ -147,8 +150,10 @@ public class GunScript : MonoBehaviour
 
     void ShootInsantiate()
     {
+        currentAmmo--;
+        Ammo.text = Mathf.RoundToInt(currentAmmo).ToString(); // Toon health als geheel getal
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
+        
 
     }
 }

@@ -68,6 +68,7 @@ public class RCUAttack : MonoBehaviour
         if (waitTimerV < waitDuration)
         {
             isWaitingHoming = true;
+            
             waitTimerV += Time.deltaTime;
         }
            
@@ -83,6 +84,7 @@ public class RCUAttack : MonoBehaviour
             {
                 nextTimeToFire = Time.time + 1f / fireRate;
                 Shoot();
+                source.PlayOneShot(alarmSound);
                 bulletsFired += 1;
             }
 
@@ -103,7 +105,8 @@ public class RCUAttack : MonoBehaviour
 
     void Shoot()
     {
-        if(currentTurret == 0)
+        
+        if (currentTurret == 0)
         {
             Instantiate(bulletPrefab, firePointL.position, firePointL.rotation);
             currentTurret = 1;
@@ -119,4 +122,6 @@ public class RCUAttack : MonoBehaviour
     {
         
     }
+
+
 }

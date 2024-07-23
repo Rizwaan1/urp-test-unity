@@ -22,6 +22,9 @@ public class EnemyMovement : MonoBehaviour
     public bool isFrozen = false;
     public bool isAggro = false;
 
+
+    public AudioSource source;
+    public AudioClip alarm;
     
     
 

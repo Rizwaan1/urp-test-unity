@@ -2,53 +2,41 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    // Maximaal aantal gezondheidspunten
-    public int maxHealth = 100;
-    // Huidige gezondheid van de speler
-    private int currentHealth;
+    public float maxHealth = 100f; // Maximum health of the player
+    private float currentHealth; // Current health of the player
 
-    // Start wordt een keer aangeroepen voor de eerste update
     void Start()
     {
-        // Zet de huidige gezondheid op het maximale gezondheid bij het begin
-        currentHealth = maxHealth;
+        currentHealth = maxHealth; // Initialize the player's health to maximum at the start
     }
 
-    // Methode om schade aan te brengen
-    public void TakeDamage(int damage)
+    // Method to handle taking damage
+    public void TakeDamage(float amount)
     {
-        currentHealth -= damage;
-        Debug.Log("Player took damage: " + damage);
+        currentHealth -= amount; // Reduce the player's health by the damage amount
+        Debug.Log("Player took damage: " + amount + ", Current health: " + currentHealth);
+        maxHealth = currentHealth;
 
-        // Controleer of de gezondheid op of onder nul is
-        if (currentHealth <= 0)
+        // Check if the player's health is depleted
+        if (currentHealth <= 0f)
         {
-            Die();
+            Die(); // Call the Die method if health is depleted
         }
     }
 
-    // Methode om de speler te genezen
-    public void Heal(int amount)
-    {
-        currentHealth += amount;
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-        Debug.Log("Player healed: " + amount);
-    }
-
-    // Methode die wordt aangeroepen als de speler sterft
+    // Method to handle player death
     void Die()
     {
         Debug.Log("Player died!");
-        // Voeg hier logica toe voor wat er moet gebeuren als de speler sterft
-        // Bijvoorbeeld: herstarten van het niveau, tonen van een doodsscherm, etc.
+        // Add logic for player death, such as playing a death animation or restarting the level
+        Destroy(gameObject);
     }
 
-    // Optioneel: Methode om de huidige gezondheid op te vragen
-    public int GetCurrentHealth()
+    // Optional method to heal the player
+    public void Heal(float amount)
     {
-        return currentHealth;
+        currentHealth += amount; // Increase the player's health by the healing amount
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth); // Ensure health does not exceed maxHealth
+        Debug.Log("Player healed: " + amount + ", Current health: " + currentHealth);
     }
 }

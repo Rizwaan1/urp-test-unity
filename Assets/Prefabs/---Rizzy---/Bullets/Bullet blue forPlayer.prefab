@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8142604086916225094}
   - component: {fileID: 185787779286105721}
   m_Layer: 0
-  m_Name: Bullet blue
+  m_Name: Bullet blue forPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -50,12 +50,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 60
   lifeTime: 3
-  damage: 10
+  damage: 1
   rb: {fileID: 2331015216271697995}
   bulletVisual: {fileID: 3197840061210134949}
   explosionPrefab: {fileID: 4362438287030270201, guid: 4360e8c38ad638b409af8a419871dbdf,
     type: 3}
   bulletTransform: {fileID: 2866476327727103615}
+  forPlayer: 1
+  forEnemy: 0
 --- !u!54 &2331015216271697995
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -114,9 +116,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6555a0bb71c734247bac0f11550263df, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 67af64843f06c8f4f966f3252cf38c43, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.665
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -268,6 +270,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4592487351068768446, guid: 9af2951a4d770ff4c9e52ceb64558c2e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c176f33f80caea46a38ec84a5aa2739, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
