@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -43.612972, y: 5.5560846, z: 6.0540047}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.83322614, y: 0.83322614, z: 0.83322614}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2866476327727103615}
@@ -48,16 +48,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d1cf9d5957005a4d8aeb72a0b03be00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 60
+  speed: 100
   lifeTime: 3
-  damage: 1
+  damage: 20
   rb: {fileID: 2331015216271697995}
   bulletVisual: {fileID: 3197840061210134949}
   explosionPrefab: {fileID: 4362438287030270201, guid: 4360e8c38ad638b409af8a419871dbdf,
     type: 3}
   bulletTransform: {fileID: 2866476327727103615}
+  bulletRecoilX: 0
+  bulletRecoilY: 0
+  bulletRecoilZ: 0
   forPlayer: 0
   forEnemy: 1
+  recoilScript: {fileID: 0}
 --- !u!54 &2331015216271697995
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -116,9 +120,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6555a0bb71c734247bac0f11550263df, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7a15fc41b1d885940a382f983eb3f01b, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.665
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -14,7 +14,7 @@ public class RCUAttack : MonoBehaviour
     public Transform playerTransform;
 
     public AudioSource source;
-    public AudioClip alarmSound;
+    
 
     private float nextTimeToFire = 0f;
 
@@ -87,7 +87,7 @@ public class RCUAttack : MonoBehaviour
             {
                 nextTimeToFire = Time.time + 1f / fireRate;
                 Shoot();
-                source.PlayOneShot(alarmSound);
+                
                 bulletsFired += 1;
             }
 
