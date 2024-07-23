@@ -23,6 +23,12 @@ public class GunScript : MonoBehaviour
     private float nextTimeToFire = 0f;
     public Text Ammo;
 
+    public GameObject bulletPrefab, bulletVisual; // De prefab die je wilt instantiate
+    public Transform firePoint; // Het punt van waaruit de prefab wordt geinstantieerd
+
+    public bool rayCast;
+    public bool instantiateFire;
+
     void Start()
     {
         initialPosition = transform.localPosition;
@@ -49,7 +55,17 @@ public class GunScript : MonoBehaviour
             if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
             {
                 nextTimeToFire = Time.time + 1f / fireRate;
-                Shoot();
+                if (rayCast)
+                {
+                    ShootRaycast();
+
+                }
+
+                if (instantiateFire)
+                {
+
+                    ShootInsantiate();
+                }
             }
         }
         else
@@ -57,7 +73,18 @@ public class GunScript : MonoBehaviour
             if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire)
             {
                 nextTimeToFire = Time.time + 1f / fireRate;
-                Shoot();
+
+                if (rayCast)
+                {
+                    ShootRaycast();
+
+                }
+
+                if (instantiateFire)
+                {
+
+                    ShootInsantiate();
+                }
             }
         }
 
@@ -76,11 +103,13 @@ public class GunScript : MonoBehaviour
         transform.localPosition = Vector3.Lerp(transform.localPosition, finalPosition + initialPosition, Time.deltaTime * swaySpeed);
     }
 
-    void Shoot()
+    void ShootRaycast()
     {
         source.PlayOneShot(gunShot);
+        ShootBulletVisual();
         currentAmmo--;
         Ammo.text = Mathf.RoundToInt(currentAmmo).ToString(); // Toon health als geheel getal
+
 
 
         RaycastHit hit;
@@ -107,5 +136,19 @@ public class GunScript : MonoBehaviour
 
         currentAmmo = maxAmmo;
         isReloading = false;
+    }
+
+
+    void ShootBulletVisual()
+    {
+        Instantiate(bulletVisual, firePoint.position, firePoint.rotation);
+    }
+
+
+    void ShootInsantiate()
+    {
+        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+
     }
 }
