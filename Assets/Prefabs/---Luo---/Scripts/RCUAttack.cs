@@ -11,6 +11,8 @@ public class RCUAttack : MonoBehaviour
     public float fireRate = 0.5f; // De tijd tussen elke schot in seconden
     private Transform tankTransform;
 
+    public Transform playerTransform;
+
     public AudioSource source;
     public AudioClip alarmSound;
 
@@ -33,6 +35,7 @@ public class RCUAttack : MonoBehaviour
 
     void Update()
     {
+        
         switch (firingState)
         {
             case FiringState.Idle: IdleState(); break;
@@ -91,7 +94,7 @@ public class RCUAttack : MonoBehaviour
                 isFiringHoming = false;
                 bulletsFired = 0;
                 waitTimerV = 0;
-
+                firingState = FiringState.FireGrenade;
             }
         }
               Debug.Log("Is Attacking" + tankTransform);
@@ -115,8 +118,29 @@ public class RCUAttack : MonoBehaviour
         }        
     }
 
+    void CheckPlayerSide()
+    {
+        // Vector from the enemy to the player
+        Vector3 directionToPlayer = playerTransform.position - transform.position;
+
+        // Check if the player is to the right or left of the enemy
+        float dotProduct = Vector3.Dot(transform.right, directionToPlayer);
+
+        if (dotProduct > 0)
+        {
+            //Fire Grenade Right
+            Debug.Log("Player is to the right of the enemy.");
+        }
+        else if (dotProduct < 0)
+        {
+            //Fire Grenade Left
+            Debug.Log("Player is to the left of the enemy.");
+        }
+    }
+
     private void FireGrenadeAttack()
     {
-        
+        CheckPlayerSide();
+        firingState = FiringState.FireVolley;
     }
 }

@@ -28354,6 +28354,11 @@ PrefabInstance:
       propertyPath: bulletsToFire
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 5684894731504861348, guid: d29ddf52831e89e4fabd594e9586aa76,
+        type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 229214878}
     - target: {fileID: 6410615658763546178, guid: d29ddf52831e89e4fabd594e9586aa76,
         type: 3}
       propertyPath: m_Mesh
