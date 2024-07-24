@@ -48,12 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d1cf9d5957005a4d8aeb72a0b03be00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 60
+  speed: 80
   lifeTime: 3
-  damage: 1
+  damage: 12
   rb: {fileID: 2331015216271697995}
   bulletVisual: {fileID: 3197840061210134949}
-  explosionPrefab: {fileID: 4362438287030270201, guid: 4360e8c38ad638b409af8a419871dbdf,
+  explosionPrefab: {fileID: 6271241949191652176, guid: 739d19610906a434a8d67ca770434aca,
     type: 3}
   bulletTransform: {fileID: 2866476327727103615}
   forPlayer: 1
@@ -66,7 +66,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5590073534210264192}
   serializedVersion: 4
-  m_Mass: 2
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -82,7 +82,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &8142604086916225094

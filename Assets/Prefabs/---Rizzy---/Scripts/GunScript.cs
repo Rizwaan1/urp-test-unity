@@ -24,7 +24,7 @@ public class GunScript : MonoBehaviour
     public Text Ammo;
     
 
-    public GameObject bulletPrefab, bulletVisual; // De prefab die je wilt instantiate
+    public GameObject bulletPrefab, bulletVisual, muzzleFlash; // De prefab die je wilt instantiate
     public Transform firePoint; // Het punt van waaruit de prefab wordt geinstantieerd
 
     public bool rayCast;
@@ -170,13 +170,20 @@ public class GunScript : MonoBehaviour
 
     void ShootBulletVisual()
     {
+        MuzzleFlash();
         Instantiate(bulletVisual, firePoint.position, firePoint.rotation);
+    }
+
+    void MuzzleFlash()
+    {
+        Instantiate(muzzleFlash, firePoint.position, firePoint.rotation);
     }
 
 
     void ShootInsantiate()
     {
         source.PlayOneShot(gunShot);
+        MuzzleFlash();
         currentAmmo--;
         Ammo.text = Mathf.RoundToInt(currentAmmo).ToString(); // Toon health als geheel getal
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
