@@ -84,7 +84,7 @@ public class EnemyAI : MonoBehaviour
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
         if (playerHealth != null)
         {
-            playerHealth.TakeDamage(attackDamage);
+           //playerHealth.TakeDamage(attackDamage);
             animator.SetBool("isAttacking", true);
         }
 

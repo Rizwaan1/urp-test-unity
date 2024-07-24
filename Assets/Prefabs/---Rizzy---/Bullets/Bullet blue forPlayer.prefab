@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2331015216271697995}
   - component: {fileID: 8142604086916225094}
   - component: {fileID: 185787779286105721}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bullet blue forPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
@@ -264,6 +264,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BulletVisuals 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3233885612632488077, guid: 9af2951a4d770ff4c9e52ceb64558c2e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3233885612632488077, guid: 9af2951a4d770ff4c9e52ceb64558c2e,
         type: 3}
