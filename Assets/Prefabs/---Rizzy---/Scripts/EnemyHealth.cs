@@ -6,31 +6,26 @@ public class EnemyHealth : MonoBehaviour
 {
     public float health = 50f;
     public AudioSource source;
-    public AudioClip DamageClip;
-    public Color damageColor = Color.red;
-    public float sizeChangeFactor = 1.2f;
-    public float changeDuration = 0.2f;
-    public Text healthText; // Referentie naar de UI Text
+    public AudioClip DamageClip, deathClip;
+    public Text healthText; // Reference to the UI Text
+    public GameObject spawnOnDeath; // Reference to the GameObject to spawn on death
 
-    private Color originalColor;
     private Vector3 originalScale;
     private Renderer enemyRenderer;
 
     void Start()
     {
         enemyRenderer = GetComponent<Renderer>();
-        //originalColor = enemyRenderer.material.color;
         originalScale = transform.localScale;
 
-        UpdateHealthUI(); // Zorg ervoor dat de UI tekst correct is bij de start
+        UpdateHealthUI(); // Ensure the UI text is correct at the start
     }
 
     public void TakeDamage(float amount)
     {
         health -= amount;
         source.PlayOneShot(DamageClip);
-        //StartCoroutine(DamageEffect());
-        UpdateHealthUI(); // Update de UI tekst bij schade
+        UpdateHealthUI(); // Update the UI text on damage
 
         if (health <= 0f)
         {
@@ -38,36 +33,21 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    private IEnumerator DamageEffect()
-    {
-        // Kleurverandering
-        enemyRenderer.material.color = damageColor;
-
-        // Size verandering
-        Vector3 newScale = originalScale * sizeChangeFactor;
-        transform.localScale = newScale;
-
-        // Wacht een bepaalde tijd
-        yield return new WaitForSeconds(changeDuration);
-
-        // Terug naar oorspronkelijke kleur
-        enemyRenderer.material.color = originalColor;
-
-        // Terug naar oorspronkelijke grootte
-        transform.localScale = originalScale;
-    }
-
     private void UpdateHealthUI()
     {
         if (healthText != null)
         {
-            healthText.text = Mathf.RoundToInt(health).ToString(); // Toon health als geheel getal
+            healthText.text = Mathf.RoundToInt(health).ToString(); // Show health as an integer
         }
     }
 
     void Die()
     {
+        source.PlayOneShot(deathClip);
+        if (spawnOnDeath != null)
+        {
+            Instantiate(spawnOnDeath, transform.position, transform.rotation);
+        }
         Destroy(gameObject);
     }
 }
-

@@ -12,7 +12,6 @@ public class GunScript : MonoBehaviour
     public AudioSource source;
     public AudioClip gunShot;
     public AudioClip reloadSound;
-    public AudioClip overheatSound; // Add an overheat sound
     public int maxAmmo = 30;
     public int currentAmmo;
     public float fireRate = 0.1f;
@@ -46,17 +45,9 @@ public class GunScript : MonoBehaviour
     [SerializeField] public float snappiness;
     [SerializeField] public float returnSpeed;
 
-    // Heat System
-    public float heat = 0f;
-    public float maxHeat = 100f;
-    public float heatIncreasePerShot = 5f;
-    public float heatDecreaseRate = 2f;
-    public float minPitch = 1f;
-    public float maxPitch = 3f;
-    public bool isOverheated = false;
-    public float cooldownDelay = 2f; // Time before heat starts to decrease
-    private float lastShotTime;
-    public float overheatCooldownTime = 5f; // Time to wait before the gun can shoot again after overheating
+    // Pitch Variation
+    public float minPitch = 0.9f;
+    public float maxPitch = 1.1f;
 
     void Start()
     {
@@ -72,10 +63,6 @@ public class GunScript : MonoBehaviour
             return;
 
         HandleSway();
-        HandleHeat();
-
-        if (isOverheated)
-            return;
 
         if (currentAmmo <= 0)
         {
@@ -129,45 +116,9 @@ public class GunScript : MonoBehaviour
         transform.localPosition = Vector3.Lerp(transform.localPosition, finalPosition + initialPosition, Time.deltaTime * swaySpeed);
     }
 
-    void HandleHeat()
-    {
-        if (Time.time - lastShotTime >= cooldownDelay && heat > 0 && !isOverheated)
-        {
-            heat -= heatDecreaseRate * Time.deltaTime;
-            heat = Mathf.Clamp(heat, 0, maxHeat);
-        }
-
-        // Adjust the pitch based on the current heat level
-        source.pitch = Mathf.Lerp(minPitch, maxPitch, heat / maxHeat);
-
-        if (heat >= maxHeat)
-        {
-            StartCoroutine(Overheat());
-        }
-    }
-
-    void IncreaseHeat()
-    {
-        heat += heatIncreasePerShot;
-        heat = Mathf.Clamp(heat, 0, maxHeat);
-        lastShotTime = Time.time;
-    }
-
-    IEnumerator Overheat()
-    {
-        isOverheated = true;
-        source.PlayOneShot(overheatSound);
-        Debug.Log("Overheated...");
-
-        yield return new WaitForSeconds(overheatCooldownTime);
-
-        isOverheated = false;
-        heat = 0; // Reset heat after cooldown
-    }
-
     void ShootRaycast()
     {
-        IncreaseHeat();
+        AdjustPitch();
         source.PlayOneShot(gunShot);
         ShootBulletVisual();
         currentAmmo--;
@@ -212,12 +163,17 @@ public class GunScript : MonoBehaviour
 
     void ShootInsantiate()
     {
-        IncreaseHeat();
+        AdjustPitch();
         source.PlayOneShot(gunShot);
         MuzzleFlash();
         currentAmmo--;
         Ammo.text = Mathf.RoundToInt(currentAmmo).ToString(); // Toon health als geheel getal
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Recoil_script.RecoilFire();
+    }
+
+    void AdjustPitch()
+    {
+        source.pitch = Random.Range(minPitch, maxPitch);
     }
 }

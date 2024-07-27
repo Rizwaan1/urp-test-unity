@@ -1,110 +1,67 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class EnemyAI : MonoBehaviour
 {
     public Transform player;
-    public float chaseRange = 10f;
-    public float attackRange = 2f;
-    public int attackDamage = 10;
-    public float attackRate = 1.5f; // Seconds between attacks
-    public float attackMoveSpeed = 0f; // Speed during attack
-    public float chaseMoveSpeed = 3.5f; // Speed during chase
+    public float attackRange = 2.0f;
+    public float damage = 10.0f;
+    public float attackRate = 1.0f; // Aanvallen per seconde
+    public float movementSpeed = 3.5f; // Bewegingssnelheid van de vijand
 
-    private Animator animator;
     private NavMeshAgent navMeshAgent;
-    private float distanceToPlayer = Mathf.Infinity;
-    private bool isProvoked = false;
     private bool isAttacking = false;
-    private float nextAttackTime = 0f;
-
-    private enum State { Idle, Chasing, Attacking }
-    private State currentState = State.Idle;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = movementSpeed; // Stel de bewegingssnelheid in
     }
 
     void Update()
     {
-        distanceToPlayer = Vector3.Distance(player.position, transform.position);
-
-        if (isProvoked)
+        if (player != null)
         {
-            EngagePlayer();
-        }
-        else if (distanceToPlayer <= chaseRange)
-        {
-            isProvoked = true;
-        }
-    }
-
-    private void EngagePlayer()
-    {
-        if (distanceToPlayer <= attackRange && Time.time >= nextAttackTime)
-        {
-            AttackPlayer();
-        }
-        else if (distanceToPlayer <= chaseRange)
-        {
-            ChasePlayer();
-        }
-        else
-        {
-            Idle();
+            float distance = Vector3.Distance(transform.position, player.position);
+            if (distance <= attackRange)
+            {
+                if (!isAttacking)
+                {
+                    StartCoroutine(Attack());
+                }
+            }
+            else
+            {
+                navMeshAgent.SetDestination(player.position);
+            }
         }
     }
 
-    private void ChasePlayer()
+    void OnTriggerEnter(Collider other)
     {
-        currentState = State.Chasing;
-        animator.SetBool("isAttacking", false);
-        animator.SetTrigger("Chase");
-        navMeshAgent.speed = chaseMoveSpeed;
-        navMeshAgent.SetDestination(player.position);
+        if (other.CompareTag("Player"))
+        {
+            player = other.transform;
+        }
     }
 
-    private void AttackPlayer()
+    private IEnumerator Attack()
     {
-        currentState = State.Attacking;
         isAttacking = true;
-        navMeshAgent.speed = attackMoveSpeed;
-        
-
-        nextAttackTime = Time.time + attackRate;
-
-        // Call the damage function once
-        Invoke(nameof(PerformAttack), 0.5f); // Adjust the delay to match your animation timing
-    }
-
-    private void PerformAttack()
-    {
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
-        if (playerHealth != null)
+
+        while (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
-           //playerHealth.TakeDamage(attackDamage);
-            animator.SetBool("isAttacking", true);
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(damage);
+                Debug.Log("Enemy attacks the player!");
+            }
+
+            yield return new WaitForSeconds(1.0f / attackRate); // Attack rate
         }
 
         isAttacking = false;
-        animator.SetBool("isAttacking", false);
-    }
-
-    private void Idle()
-    {
-        currentState = State.Idle;
-        animator.SetBool("isAttacking", false);
-        animator.ResetTrigger("Chase");
-        navMeshAgent.ResetPath();
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, chaseRange);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }
