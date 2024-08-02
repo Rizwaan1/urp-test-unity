@@ -1,10 +1,17 @@
 using UnityEngine;
+using MoreMountains.Feedbacks;
 
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f; // Maximum health of the player
+    public float lowHealthThreshold = 20f; // Health threshold to trigger low health feedback
+    public MMFeedbacks getHitFeedBack, onDeathFeedBack, onLowHealthFeedBack; // Feedbacks
+    public GameObject objectToSpawn; // Object to spawn on death
+    public Transform spawnPoint; // Spawn point for the object
+
     private float currentHealth; // Current health of the player
     private Rigidbody rb; // Rigidbody component reference
+    private bool lowHealthFeedbackPlayed = false; // To ensure the low health feedback is played only once
 
     void Start()
     {
@@ -22,7 +29,14 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth -= amount; // Reduce the player's health by the damage amount
         Debug.Log("Player took damage: " + amount + ", Current health: " + currentHealth);
-        maxHealth = currentHealth;
+        getHitFeedBack?.PlayFeedbacks();
+
+        // Check if the player's health falls below the low health threshold
+        if (currentHealth <= lowHealthThreshold && !lowHealthFeedbackPlayed)
+        {
+            onLowHealthFeedBack?.PlayFeedbacks();
+            lowHealthFeedbackPlayed = true; // Ensure the feedback is played only once
+        }
 
         // Check if the player's health is depleted
         if (currentHealth <= 0f)
@@ -35,17 +49,15 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("Player died!");
+        onDeathFeedBack?.PlayFeedbacks();
 
-        // Disable the Rigidbody's rotation constraints
-        if (rb != null)
+        // Spawn the object at the specified spawn point
+        if (objectToSpawn != null && spawnPoint != null)
         {
-            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ; // Keep the player on the X-Z plane
-            rb.freezeRotation = false; // Allow rotation
-            rb.AddTorque(Vector3.up * 500f); // Add torque to make the player fall over
+            Instantiate(objectToSpawn, spawnPoint.position, spawnPoint.rotation);
         }
 
-        // Add logic for player death, such as playing a death animation or restarting the level
-        //Destroy(gameObject, 2f); // Destroy the player object after 2 seconds
+        Destroy(gameObject);
     }
 
     // Optional method to heal the player
@@ -54,5 +66,17 @@ public class PlayerHealth : MonoBehaviour
         currentHealth += amount; // Increase the player's health by the healing amount
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth); // Ensure health does not exceed maxHealth
         Debug.Log("Player healed: " + amount + ", Current health: " + currentHealth);
+
+        // Reset the low health feedback if the player's health goes above the threshold
+        if (currentHealth > lowHealthThreshold)
+        {
+            lowHealthFeedbackPlayed = false;
+        }
+    }
+
+    // This method will call TakeDamage to reduce the player's health
+    public void ApplyDamagezobmie(float Damage)
+    {
+        TakeDamage(Damage);
     }
 }

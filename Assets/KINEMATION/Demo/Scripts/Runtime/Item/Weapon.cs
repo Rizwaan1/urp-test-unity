@@ -57,6 +57,8 @@ namespace Demo.Scripts.Runtime.Item
         [Header("Shooting")]
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private Transform firePoint;
+        public bool Noise;
+
 
         //~ Controller references
         private FPSController _fpsController;
@@ -292,6 +294,7 @@ namespace Demo.Scripts.Runtime.Item
 
             _fpsCameraController.PlayCameraShake(cameraShake);
             gunShotFeedBack?.PlayFeedbacks();
+
             currentAmmo--;
 
             if (bulletPrefab != null && firePoint != null)

@@ -6,7 +6,7 @@ public class MakeNoise : MonoBehaviour
 {
 
    public KeyCode NoiseKey;
-   [HideInInspector]
+   
    public bool Noise;
    float timer;
     // Start is called before the first frame update

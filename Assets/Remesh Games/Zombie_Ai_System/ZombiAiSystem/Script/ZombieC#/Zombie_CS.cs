@@ -21,6 +21,7 @@ public class Zombie_CS : MonoBehaviour
     public Movment MovementState;
     [HideInInspector]
     public int NumberMovment;
+    public float walkSpeed, runSpeed;
     ///////////// HealthBar State //////////////////////
     public enum HealthBar { Hidden, Unhidden };
     public HealthBar HealthBarState;
@@ -225,7 +226,7 @@ public class Zombie_CS : MonoBehaviour
             if (IsMove == true)
             {
 
-                ZombieNavMesh.speed = 1.5f;
+                ZombieNavMesh.speed = walkSpeed;
                 ZombieNavMesh.destination = Player.position;
                // LookAtTarget();
                 //  transform.LookAt(new Vector3(Player.position.x, transform.position.y, Player.position.z));
@@ -246,7 +247,7 @@ public class Zombie_CS : MonoBehaviour
 
             if (IsMove == true)
             {
-                ZombieNavMesh.speed = 3f;
+                ZombieNavMesh.speed = runSpeed;
                 ZombieNavMesh.destination = Player.position;
               //  LookAtTarget();
                 // transform.LookAt(new Vector3(Player.position.x, transform.position.y, Player.position.z));
@@ -290,6 +291,7 @@ public class Zombie_CS : MonoBehaviour
         /////////////////////// Read to Hearing ///////////////////////////////////
 
         MakeNoise ZombieNoise = Player.GetComponent<MakeNoise>();
+        
         if (ZombieNoise != null) 
         {
             if (Ready == true && ZombieNoise.Noise == true)
@@ -373,7 +375,7 @@ public class Zombie_CS : MonoBehaviour
 
             if (hit.transform.gameObject.name == PlayerName)
             {
-                hit.transform.gameObject.SendMessage("ApplyDamage", Damage);
+                hit.transform.gameObject.SendMessage("ApplyDamagezobmie", Damage);
             }
 
 
@@ -508,6 +510,7 @@ private void OnDrawGizmosSelected()
             if (hit.transform.gameObject.name == PlayerName)
             {
                 CanISee = true;
+                Debug.Log("sawPlayer");
             }
             if (hit.transform.gameObject.name != PlayerName)
             {
