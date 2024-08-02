@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using MoreMountains.Feedbacks;
 
 public class Zombie_CS : MonoBehaviour
 {
@@ -56,6 +57,8 @@ public class Zombie_CS : MonoBehaviour
     [HideInInspector]
     public bool CanISee;
 
+   
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +68,7 @@ public class Zombie_CS : MonoBehaviour
         Pos = transform.Find("Pos").GetComponent<Transform>();
         ZombieNavMesh = GetComponent<NavMeshAgent>();
         Anim = GetComponent<Animator>();
+       
 
         Player = GameObject.Find(PlayerName).transform;
         RandomDestroy = Random.Range(5.0f, 8.0f);
@@ -249,8 +253,9 @@ public class Zombie_CS : MonoBehaviour
             {
                 ZombieNavMesh.speed = runSpeed;
                 ZombieNavMesh.destination = Player.position;
-              //  LookAtTarget();
+                //  LookAtTarget();
                 // transform.LookAt(new Vector3(Player.position.x, transform.position.y, Player.position.z));
+               
                 Anim.SetBool("Run", true);
             }
             if (IsMove == false)
@@ -273,6 +278,8 @@ public class Zombie_CS : MonoBehaviour
         {
           
             Death();
+            
+            Debug.Log("DeathAi");
         }
 
         if(NumberHealth == 0 && Health > 0.0f) 
@@ -395,6 +402,7 @@ public class Zombie_CS : MonoBehaviour
         int RandomDeath = Random.Range(1, 5);
         Anim.SetInteger("Death_Int", RandomDeath);
         ZombieNavMesh.speed = 0.0f;
+       
         //ZombieNavMesh.enabled = false;
         this.GetComponent<Collider>().enabled = false;
         if (NumberDestroy == 0)

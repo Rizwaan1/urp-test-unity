@@ -792,6 +792,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5590073534210264192, guid: 6cb7ab2d7526f6340a7165c9a045fbe3,
     type: 3}
   firePoint: {fileID: 430387970301253962}
+  Noise: 0
 --- !u!95 &2151158701131182720
 Animator:
   serializedVersion: 5
@@ -1652,7 +1653,7 @@ PrefabInstance:
         type: 3}
       propertyPath: managedReferences[1239222225939464192].RandomSfx.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 5710652a3d8b1bf4aadeecccc99fdc94, type: 3}
+      objectReference: {fileID: 8300000, guid: 3e1c1d398999ffa4e8f0aa17ac027a2e, type: 3}
     - target: {fileID: 7234235204676500303, guid: 7e2cc33061933aa41829783107ecf88e,
         type: 3}
       propertyPath: managedReferences[1239222225939464192].RandomSfx.Array.data[1]
