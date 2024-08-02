@@ -3,6 +3,7 @@ using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Playables;
 using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
 using KINEMATION.KAnimationCore.Runtime.Input;
+using MoreMountains.Feedbacks;
 
 using Demo.Scripts.Runtime.AttachmentSystem;
 
@@ -51,6 +52,7 @@ namespace Demo.Scripts.Runtime.Item
         [SerializeField] private int maxAmmo = 30;
         [SerializeField] private int currentAmmo;
         [SerializeField] private float reloadTime = 2f;
+        [SerializeField] public MMFeedbacks gunShotFeedBack;
 
         [Header("Shooting")]
         [SerializeField] private GameObject bulletPrefab;
@@ -276,12 +278,19 @@ namespace Demo.Scripts.Runtime.Item
 
         private void OnFire()
         {
+            if (currentAmmo <= 0)
+            {
+                OnFireReleased();
+                return;
+            }
+
             if (_weaponAnimator != null)
             {
                 _weaponAnimator.Play("Fire", 0, 0f);
             }
 
             _fpsCameraController.PlayCameraShake(cameraShake);
+            gunShotFeedBack?.PlayFeedbacks();
             currentAmmo--;
 
             if (bulletPrefab != null && firePoint != null)

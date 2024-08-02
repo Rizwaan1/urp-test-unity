@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -43.612972, y: 5.5560846, z: 6.0540047}
-  m_LocalScale: {x: 0.83322614, y: 0.83322614, z: 0.83322614}
+  m_LocalScale: {x: 0.4797216, y: 0.4797216, z: 0.4797216}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2866476327727103615}
@@ -56,12 +56,8 @@ MonoBehaviour:
   explosionPrefab: {fileID: 4362438287030270201, guid: 4360e8c38ad638b409af8a419871dbdf,
     type: 3}
   bulletTransform: {fileID: 2866476327727103615}
-  bulletRecoilX: 0
-  bulletRecoilY: 0
-  bulletRecoilZ: 0
   forPlayer: 0
   forEnemy: 1
-  recoilScript: {fileID: 0}
 --- !u!54 &2331015216271697995
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -117,7 +113,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5590073534210264192}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7a15fc41b1d885940a382f983eb3f01b, type: 3}
