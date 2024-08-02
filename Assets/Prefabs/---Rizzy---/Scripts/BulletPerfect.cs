@@ -1,4 +1,6 @@
 using UnityEngine;
+using MoreMountains.Feedbacks;
+using Unity.VisualScripting;
 
 public class BulletPerfect : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class BulletPerfect : MonoBehaviour
     public GameObject bulletVisual, explosionPrefab;
     public Transform bulletTransform;
 
+    [SerializeField] public MMFeedbacks onHit, onSpawn;
+
     public bool forPlayer,forEnemy;
   
 
@@ -17,6 +21,7 @@ public class BulletPerfect : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed; // Schiet de kogel naar voren
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous; // Zorg voor nauwkeurige detectie bij hoge snelheid
+        onSpawn?.PlayFeedbacks();
 
         Destroy(gameObject, lifeTime); // Vernietig de kogel na een bepaalde tijd om geheugen vrij te maken
     }
@@ -35,7 +40,7 @@ public class BulletPerfect : MonoBehaviour
     void HandleCollision(Collision collision)
     {
         // Instantiate explosie effect
-        Instantiate(explosionPrefab, bulletTransform.position, bulletTransform.rotation);
+        
 
         if (forPlayer)
         {
@@ -65,7 +70,8 @@ public class BulletPerfect : MonoBehaviour
                 EnemyHealth enemy = collision.gameObject.GetComponent<EnemyHealth>();
                 if (enemy != null)
                 {
-                    enemy.TakeDamage(damage); // Schade toebrengen aan de vijand
+                onHit?.PlayFeedbacks();
+                enemy.TakeDamage(damage); // Schade toebrengen aan de vijand
                 }
             }
 

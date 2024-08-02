@@ -52,7 +52,7 @@ namespace Demo.Scripts.Runtime.Item
         [SerializeField] private int maxAmmo = 30;
         [SerializeField] private int currentAmmo;
         [SerializeField] private float reloadTime = 2f;
-        [SerializeField] public MMFeedbacks gunShotFeedBack;
+        [SerializeField] public MMFeedbacks gunShotFeedBack, reloadMagFeedback;
 
         [Header("Shooting")]
         [SerializeField] private GameObject bulletPrefab;
@@ -239,6 +239,7 @@ namespace Demo.Scripts.Runtime.Item
             {
                 _weaponAnimator.Rebind();
                 _weaponAnimator.Play("Reload", 0);
+                reloadMagFeedback?.PlayFeedbacks();
             }
 
             if (_fpsCameraController != null)
