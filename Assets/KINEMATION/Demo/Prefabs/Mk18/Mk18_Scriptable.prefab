@@ -1641,6 +1641,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7234235204676500303, guid: 7e2cc33061933aa41829783107ecf88e,
         type: 3}
+      propertyPath: managedReferences[1239222225939464192].MaxPitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7234235204676500303, guid: 7e2cc33061933aa41829783107ecf88e,
+        type: 3}
+      propertyPath: managedReferences[1239222225939464192].MinPitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7234235204676500303, guid: 7e2cc33061933aa41829783107ecf88e,
+        type: 3}
       propertyPath: managedReferences[1239222225939464192].TargetAudioSource
       value: 
       objectReference: {fileID: 6705762442817068893}
@@ -1651,14 +1661,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7234235204676500303, guid: 7e2cc33061933aa41829783107ecf88e,
         type: 3}
+      propertyPath: managedReferences[1239222225939464192].Timing.TimescaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7234235204676500303, guid: 7e2cc33061933aa41829783107ecf88e,
+        type: 3}
+      propertyPath: managedReferences[1239222225939464192].Timing.LimitPlayCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7234235204676500303, guid: 7e2cc33061933aa41829783107ecf88e,
+        type: 3}
       propertyPath: managedReferences[1239222225939464192].RandomSfx.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 3e1c1d398999ffa4e8f0aa17ac027a2e, type: 3}
+      objectReference: {fileID: 8300000, guid: c94ff1d0f3309bf4e9ff11730eafbcd7, type: 3}
     - target: {fileID: 7234235204676500303, guid: 7e2cc33061933aa41829783107ecf88e,
         type: 3}
       propertyPath: managedReferences[1239222225939464192].RandomSfx.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: c2d61dba7a4513e44a3c1cb942d28978, type: 3}
+      objectReference: {fileID: 8300000, guid: 5710652a3d8b1bf4aadeecccc99fdc94, type: 3}
+    - target: {fileID: 7234235204676500303, guid: 7e2cc33061933aa41829783107ecf88e,
+        type: 3}
+      propertyPath: managedReferences[1239222225939464192].RandomSfx.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7234235204676500303, guid: 7e2cc33061933aa41829783107ecf88e,
+        type: 3}
+      propertyPath: managedReferences[1239222225939464192].Timing.ExcludeFromHoldingPauses
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8644124617813477940, guid: 7e2cc33061933aa41829783107ecf88e,
         type: 3}
       propertyPath: managedReferences[1239222225939464198].TargetAudioSource

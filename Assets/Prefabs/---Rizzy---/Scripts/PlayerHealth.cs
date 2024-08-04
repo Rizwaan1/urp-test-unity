@@ -1,10 +1,13 @@
 using UnityEngine;
 using MoreMountains.Feedbacks;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f; // Maximum health of the player
     public float lowHealthThreshold = 20f; // Health threshold to trigger low health feedback
+    public float regenerationRate = 5f; // Health points regained per second
+    public float regenerationDelay = 5f; // Seconds before regeneration starts
     public MMFeedbacks getHitFeedBack, onDeathFeedBack, onLowHealthFeedBack; // Feedbacks
     public GameObject objectToSpawn; // Object to spawn on death
     public Transform spawnPoint; // Spawn point for the object
@@ -12,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
     private float currentHealth; // Current health of the player
     private Rigidbody rb; // Rigidbody component reference
     private bool lowHealthFeedbackPlayed = false; // To ensure the low health feedback is played only once
+    private Coroutine regenerationCoroutine; // Reference to the regeneration coroutine
 
     void Start()
     {
@@ -31,6 +35,12 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player took damage: " + amount + ", Current health: " + currentHealth);
         getHitFeedBack?.PlayFeedbacks();
 
+        // Stop the regeneration coroutine if it's running
+        if (regenerationCoroutine != null)
+        {
+            StopCoroutine(regenerationCoroutine);
+        }
+
         // Check if the player's health falls below the low health threshold
         if (currentHealth <= lowHealthThreshold && !lowHealthFeedbackPlayed)
         {
@@ -42,6 +52,11 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0f)
         {
             Die(); // Call the Die method if health is depleted
+        }
+        else
+        {
+            // Start the regeneration coroutine
+            regenerationCoroutine = StartCoroutine(RegenerateHealth());
         }
     }
 
@@ -74,9 +89,31 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // This method will call TakeDamage to reduce the player's health
-    public void ApplyDamagezobmie(float Damage)
+    // Coroutine to handle health regeneration
+    private IEnumerator RegenerateHealth()
     {
-        TakeDamage(Damage);
+        // Wait for the specified delay before starting regeneration
+        yield return new WaitForSeconds(regenerationDelay);
+
+        // Regenerate health over time until the player reaches max health or takes damage
+        while (currentHealth < maxHealth)
+        {
+            currentHealth += regenerationRate * Time.deltaTime;
+            currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+            Debug.Log("Regenerating health: " + currentHealth);
+            yield return null;
+        }
+    }
+
+    // This method will call TakeDamage to reduce the player's health
+    public void ApplyDamagezombie(float damage)
+    {
+        TakeDamage(damage);
+    }
+
+    // Method to handle object pickup and heal the player
+    public void PickupHealthObject(float healAmount)
+    {
+        Heal(healAmount);
     }
 }

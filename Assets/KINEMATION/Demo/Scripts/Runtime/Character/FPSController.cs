@@ -50,6 +50,8 @@ namespace Demo.Scripts.Runtime.Character
         private bool _isUnarmed;
         private Animator _animator;
 
+        public MoneyManager moneyManager;
+
         //~ Legacy Controller Interface
 
         // ~Scriptable Animation System Integration
@@ -122,9 +124,10 @@ namespace Demo.Scripts.Runtime.Character
         {
             _instantiatedWeapons = new List<FPSItem>();
 
-            foreach (var prefab in settings.weaponPrefabs)
+            // Alleen het eerste wapen initialiseren
+            if (settings.weaponPrefabs.Count > 0)
             {
-                var weapon = Instantiate(prefab, transform.position, Quaternion.identity);
+                var weapon = Instantiate(settings.weaponPrefabs[0], transform.position, Quaternion.identity);
 
                 var weaponTransform = weapon.transform;
 
@@ -133,9 +136,54 @@ namespace Demo.Scripts.Runtime.Character
                 weaponTransform.localRotation = Quaternion.identity;
 
                 _instantiatedWeapons.Add(weapon.GetComponent<FPSItem>());
-                weapon.gameObject.SetActive(false);
+                weapon.gameObject.SetActive(true);  // Begin met dit wapen geactiveerd
             }
         }
+        public void BuyWeapon(GameObject weaponPrefab, float cost)
+        {
+            // Check if the player has enough money via MoneyManager
+            if (moneyManager.SpendMoney(cost))
+            {
+                // If already have 2 weapons, remove the active one and replace it
+                if (_instantiatedWeapons.Count >= 2)
+                {
+                    RemoveCurrentWeapon();
+                }
+
+                // Instantiate and add the new weapon
+                var weapon = Instantiate(weaponPrefab, transform.position, Quaternion.identity);
+                var weaponTransform = weapon.transform;
+                weaponTransform.parent = _weaponBone;
+                weaponTransform.localPosition = Vector3.zero;
+                weaponTransform.localRotation = Quaternion.identity;
+                _instantiatedWeapons.Add(weapon.GetComponent<FPSItem>());
+
+                // Equip the new weapon
+                _activeWeaponIndex = _instantiatedWeapons.Count - 1;
+                EquipWeapon();
+            }
+            else
+            {
+                Debug.Log("Not enough money to buy this weapon.");
+            }
+        }
+
+        private void RemoveCurrentWeapon()
+        {
+            if (_instantiatedWeapons.Count == 0) return;
+
+            // Remove the currently active weapon
+            var weaponToRemove = _instantiatedWeapons[_activeWeaponIndex];
+            _instantiatedWeapons.RemoveAt(_activeWeaponIndex);
+            Destroy(weaponToRemove.gameObject);
+
+            // Reset active weapon index to the previous one
+            _activeWeaponIndex = Mathf.Clamp(_activeWeaponIndex - 1, 0, _instantiatedWeapons.Count - 1);
+        }
+
+
+
+
 
         private void Start()
         {
@@ -173,12 +221,33 @@ namespace Demo.Scripts.Runtime.Character
         {
             if (_instantiatedWeapons.Count == 0) return;
 
+            // Zorg ervoor dat alleen 2 wapens worden geladen
+            if (_instantiatedWeapons.Count > 2)
+            {
+                Debug.Log("Too many weapons equipped.");
+                return;
+            }
+
             _instantiatedWeapons[_previousWeaponIndex].gameObject.SetActive(false);
             GetActiveItem().gameObject.SetActive(true);
             GetActiveItem().OnEquip(gameObject);
 
             _actionState = FPSActionState.None;
         }
+
+
+        private void RemoveOldestWeapon()
+        {
+            if (_instantiatedWeapons.Count == 0) return;
+
+            // Verwijder het eerste wapen in de lijst
+            var weaponToRemove = _instantiatedWeapons[0];
+            _instantiatedWeapons.RemoveAt(0);
+
+            // Zet het wapen inactief en vernietig het
+            Destroy(weaponToRemove.gameObject);
+        }
+
 
         private void DisableAim()
         {

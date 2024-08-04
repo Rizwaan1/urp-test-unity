@@ -59,9 +59,13 @@ namespace Demo.Scripts.Runtime.Item
         [SerializeField] private Transform firePoint;
         public bool Noise;
 
+        [Header("Movement Speed During Reload")]
+        [SerializeField] private float reducedWalkSpeed = 1.5f;
+        [SerializeField] private float reducedRunSpeed = 3.0f;
 
         //~ Controller references
         private FPSController _fpsController;
+        private FPSMovement _fpsMovement;  // Add this reference
         private Animator _controllerAnimator;
         private UserInputController _userInputController;
         private IPlayablesController _playablesController;
@@ -131,6 +135,7 @@ namespace Demo.Scripts.Runtime.Item
             _fpsAnimatorEntity = GetComponent<FPSAnimatorEntity>();
 
             _fpsController = parent.GetComponent<FPSController>();
+            _fpsMovement = parent.GetComponent<FPSMovement>();  // Get the FPSMovement component
             _weaponAnimator = GetComponentInChildren<Animator>();
 
             _controllerAnimator = parent.GetComponent<Animator>();
@@ -235,6 +240,7 @@ namespace Demo.Scripts.Runtime.Item
             }
 
             _isReloading = true;
+            _fpsMovement.AdjustMovementSpeed(reducedWalkSpeed, reducedRunSpeed);  // Reduce movement speed during reload
             _playablesController.PlayAnimation(reloadClip, 0f);
 
             if (_weaponAnimator != null)
@@ -258,6 +264,7 @@ namespace Demo.Scripts.Runtime.Item
         {
             currentAmmo = maxAmmo;
             _isReloading = false;
+            _fpsMovement.ResetMovementSpeed();  // Reset movement speed after reload
             OnActionEnded();
         }
 

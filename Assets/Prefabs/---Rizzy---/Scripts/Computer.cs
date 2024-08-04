@@ -1,3 +1,4 @@
+using Demo.Scripts.Runtime.Character;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,32 +6,41 @@ using UnityEngine;
 public class Computer : MonoBehaviour, IInteractable
 {
     public AudioSource source;
-    public AudioClip ComputerSound;
-    public GameObject uiPanel; // Reference to the UI Panel that you want to show
-    private PlayerController playerController; // Reference to the player's script
+    public AudioClip ComputerSound, buySound;
+    public GameObject uiPanel; // Referentie naar het UI-paneel dat je wilt tonen
+    public FPSController fpsController;  // Voeg een referentie toe naar FPSController
+    public GameObject weaponPrefab;  // Referentie naar het wapen prefab dat je wilt kopen
+    public float weaponCost = 100f;  // Kost van het wapen
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        // Find the player object and get the PlayerController component
-        playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        // Initialiseer indien nodig
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
+        // Update indien nodig
     }
 
     public void Interact()
     {
-        // Play the computer sound
-        source.PlayOneShot(ComputerSound);
+        // Speel het computer geluid af
+       
 
+        // Toon het UI-paneel
+       // uiPanel.SetActive(true);
 
-        // Show the UI Panel
-        uiPanel.SetActive(true);
-
-
+        // Koop het wapen
+        if (fpsController != null)
+        {
+            fpsController.BuyWeapon(weaponPrefab, weaponCost);
+            Debug.Log("Bought Weapn");
+            source.PlayOneShot(buySound);
+        }
+        else
+        {
+            Debug.LogError("FPSController reference is not set.");
+            source.PlayOneShot(ComputerSound);
+        }
     }
 }
