@@ -51,6 +51,13 @@ public class Zombie_CS : MonoBehaviour
     [HideInInspector]
     public bool CanISee;
 
+    // Add these public fields to set the money rewards
+    public int moneyPerHit = 10;
+    public int moneyOnDeath = 50;
+
+    private MoneyManager moneyManager;
+    private bool isDead = false; // Flag to track if the zombie is dead
+
     void Start()
     {
         HealthBarUI = transform.Find("HealthBar_Canvas/Slider").GetComponent<Slider>();
@@ -59,6 +66,7 @@ public class Zombie_CS : MonoBehaviour
         Anim = GetComponent<Animator>();
 
         Player = GameObject.Find(PlayerName).transform;
+        moneyManager = FindObjectOfType<MoneyManager>();  // Find the MoneyManager in the scene
         RandomDestroy = Random.Range(5.0f, 8.0f);
         ChackHit = false;
         if (Spawn == false)
@@ -191,7 +199,7 @@ public class Zombie_CS : MonoBehaviour
             }
         }
 
-        if (Health <= 0.0f)
+        if (Health <= 0.0f && !isDead)
         {
             Death();
         }
@@ -270,6 +278,7 @@ public class Zombie_CS : MonoBehaviour
 
     void Death()
     {
+        isDead = true; // Set the isDead flag to true
         Anim.SetBool("Attack", false);
         HealthBarUI.gameObject.SetActive(false);
         Anim.SetBool("Death", true);
@@ -277,17 +286,30 @@ public class Zombie_CS : MonoBehaviour
         Anim.SetInteger("Death_Int", RandomDeath);
         ZombieNavMesh.speed = 0.0f;
         this.GetComponent<Collider>().enabled = false;
+
+        // Add money on death
+        if (moneyManager != null)
+        {
+            moneyManager.AddMoney(moneyOnDeath);
+        }
+
         if (NumberDestroy == 0)
         {
             StartCoroutine(TimeToDestroy());
         }
-        waveSystem.ZombieKilled(); // Informeert WaveSystem dat deze zombie is gedood
+        else if (NumberDestroy == 1 && waveSystem != null) // Als de zombie niet wordt vernietigd, maar dood is, informeer het waveSystem direct
+        {
+            waveSystem.ZombieKilled(); // Informeert WaveSystem dat deze zombie is gedood
+        }
     }
-
 
     IEnumerator TimeToDestroy()
     {
         yield return new WaitForSeconds(RandomDestroy);
+        if (waveSystem != null)
+        {
+            waveSystem.ZombieKilled(); // Informeert WaveSystem dat deze zombie is gedood
+        }
         Destroy(gameObject);
     }
 
@@ -352,5 +374,11 @@ public class Zombie_CS : MonoBehaviour
     {
         Health -= Damage;
         IsMove = true;
+
+        // Add money on hit
+        if (moneyManager != null && !isDead) // Ensure money is only added if the zombie is not dead
+        {
+            moneyManager.AddMoney(moneyPerHit);
+        }
     }
 }

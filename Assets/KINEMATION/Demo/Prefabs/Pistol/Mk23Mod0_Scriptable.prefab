@@ -645,6 +645,8 @@ MonoBehaviour:
     - {fileID: 7649588884087146613}
   maxAmmo: 10
   currentAmmo: 0
+  totalAmmo: 10
+  maxTotalAmmo: 10
   reloadTime: 2
   gunShotFeedBack: {fileID: 6273738335077481906}
   reloadMagFeedback: {fileID: 3726905090449781757}

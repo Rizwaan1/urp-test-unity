@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using MoreMountains.Feedbacks;
 using System.Collections;
 
@@ -11,6 +12,8 @@ public class PlayerHealth : MonoBehaviour
     public MMFeedbacks getHitFeedBack, onDeathFeedBack, onLowHealthFeedBack; // Feedbacks
     public GameObject objectToSpawn; // Object to spawn on death
     public Transform spawnPoint; // Spawn point for the object
+    public Text healthText; // Reference to the UI Text component
+    public Slider healthSlider; // Reference to the UI Slider component
 
     private float currentHealth; // Current health of the player
     private Rigidbody rb; // Rigidbody component reference
@@ -26,6 +29,9 @@ public class PlayerHealth : MonoBehaviour
             // Optionally freeze rotation to prevent unwanted rotation
             rb.freezeRotation = true;
         }
+
+        // Initialize the UI elements
+        UpdateHealthUI();
     }
 
     // Method to handle taking damage
@@ -34,6 +40,9 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= amount; // Reduce the player's health by the damage amount
         Debug.Log("Player took damage: " + amount + ", Current health: " + currentHealth);
         getHitFeedBack?.PlayFeedbacks();
+
+        // Update the UI elements
+        UpdateHealthUI();
 
         // Stop the regeneration coroutine if it's running
         if (regenerationCoroutine != null)
@@ -82,6 +91,9 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth); // Ensure health does not exceed maxHealth
         Debug.Log("Player healed: " + amount + ", Current health: " + currentHealth);
 
+        // Update the UI elements
+        UpdateHealthUI();
+
         // Reset the low health feedback if the player's health goes above the threshold
         if (currentHealth > lowHealthThreshold)
         {
@@ -101,6 +113,10 @@ public class PlayerHealth : MonoBehaviour
             currentHealth += regenerationRate * Time.deltaTime;
             currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
             Debug.Log("Regenerating health: " + currentHealth);
+
+            // Update the UI elements
+            UpdateHealthUI();
+
             yield return null;
         }
     }
@@ -115,5 +131,19 @@ public class PlayerHealth : MonoBehaviour
     public void PickupHealthObject(float healAmount)
     {
         Heal(healAmount);
+    }
+
+    // Method to update the UI elements
+    private void UpdateHealthUI()
+    {
+        if (healthText != null)
+        {
+            healthText.text = "Health: " + currentHealth.ToString("F0");
+        }
+
+        if (healthSlider != null)
+        {
+            healthSlider.value = currentHealth / maxHealth;
+        }
     }
 }

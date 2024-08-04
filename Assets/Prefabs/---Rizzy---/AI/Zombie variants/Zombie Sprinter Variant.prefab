@@ -75,6 +75,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
+      propertyPath: moneyOnDeath
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
+        type: 3}
       propertyPath: MovementState
       value: 1
       objectReference: {fileID: 0}

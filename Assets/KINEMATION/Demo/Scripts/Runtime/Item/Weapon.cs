@@ -49,8 +49,10 @@ namespace Demo.Scripts.Runtime.Item
         [SerializeField] private List<AttachmentGroup<ScopeAttachment>> scopeGroups = new List<AttachmentGroup<ScopeAttachment>>();
 
         [Header("Ammo")]
-        [SerializeField] private int maxAmmo = 30;
-        [SerializeField] private int currentAmmo;
+        [SerializeField] private int maxAmmo = 30; // Magazine ammo capacity
+        [SerializeField] private int currentAmmo; // Current ammo in the magazine
+        [SerializeField] private int totalAmmo = 90; // Total ammo pool
+        [SerializeField] private int maxTotalAmmo = 90; // Maximum total ammo pool
         [SerializeField] private float reloadTime = 2f;
         [SerializeField] public MMFeedbacks gunShotFeedBack, reloadMagFeedback;
 
@@ -234,7 +236,7 @@ namespace Demo.Scripts.Runtime.Item
 
         public override bool OnReload()
         {
-            if (_isReloading || currentAmmo == maxAmmo)
+            if (_isReloading || currentAmmo == maxAmmo || totalAmmo <= 0)
             {
                 return false;
             }
@@ -262,7 +264,15 @@ namespace Demo.Scripts.Runtime.Item
 
         private void FinishReload()
         {
-            currentAmmo = maxAmmo;
+            int ammoToReload = maxAmmo - currentAmmo;
+            if (totalAmmo < ammoToReload)
+            {
+                ammoToReload = totalAmmo;
+            }
+
+            currentAmmo += ammoToReload;
+            totalAmmo -= ammoToReload;
+
             _isReloading = false;
             _fpsMovement.ResetMovementSpeed();  // Reset movement speed after reload
             OnActionEnded();
