@@ -418,7 +418,7 @@ public class Zombie_CS : MonoBehaviour
 
     { 
         yield return new WaitForSeconds(RandomDestroy);
-        Destroy(gameObject);
+        Destroy(gameObject , 30f);
                 
      }
 

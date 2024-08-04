@@ -6681,12 +6681,12 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326970406}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1d4018b43c9830443a6374c17832b276, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.436
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -30555,15 +30555,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: bc55319c0b8e448cf97e698c5c6718aa, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.903336
+      value: 87.529686
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: bc55319c0b8e448cf97e698c5c6718aa, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.903336
+      value: 87.529686
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: bc55319c0b8e448cf97e698c5c6718aa, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.903336
+      value: 87.529686
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: bc55319c0b8e448cf97e698c5c6718aa, type: 3}
       propertyPath: m_LocalPosition.x
