@@ -631,10 +631,10 @@ MonoBehaviour:
   recoilPatternSettings: {fileID: 11400000, guid: b60711d0a5eabca449a3e2324c4d3483,
     type: 2}
   cameraShake: {fileID: 11400000, guid: 5563e5a81879bf3488e215990ceb8724, type: 2}
-  fireRate: 800
+  fireRate: 1000
   supportsAuto: 0
   supportsBurst: 0
-  burstLength: 0
+  burstLength: 5
   barrelAttachments:
     attachments:
     - {fileID: 4906986926478446265}

@@ -22,10 +22,10 @@ MonoBehaviour:
     velocity: 1.1
     velocitySmoothing: 4
   walking:
-    velocity: 1.7751479
+    velocity: 3
     velocitySmoothing: 3
   sprinting:
-    velocity: 3.5502958
+    velocity: 3
     velocitySmoothing: 3
   crouchRatio: 0.65
   jumpHeight: 4

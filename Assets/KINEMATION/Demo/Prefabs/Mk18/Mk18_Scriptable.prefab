@@ -755,8 +755,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fieldOfView: 90
   weight: 3
-  weaponWalkSpeed: 3
-  weaponRunSpeed: 6
+  weaponWalkSpeed: 1
+  weaponRunSpeed: 2
   reloadClip: {fileID: 11400000, guid: 93c514e68bc083d45b016a3d5f10d7bc, type: 2}
   cameraReloadAnimation: {fileID: 11400000, guid: b9c08f43ccbcf91449ee81a090e5f9cf,
     type: 2}

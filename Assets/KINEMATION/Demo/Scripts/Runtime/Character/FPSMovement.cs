@@ -93,7 +93,6 @@ namespace Demo.Scripts.Runtime.Character
 
         private float _originalWalkSpeed;
         private float _originalRunSpeed;
-        private bool _isReloading = false;
 
         private Weapon _currentWeapon;
 
@@ -465,25 +464,26 @@ namespace Demo.Scripts.Runtime.Character
         // Method to adjust movement speed based on weapon weight
         private void AdjustMovementSpeedBasedOnWeapon()
         {
-            float weight = _currentWeapon != null ? _currentWeapon.GetWeight() : 0f;
-            float speedMultiplier = 1f / (1f + weight / 10f); // Adjust the divisor to change the impact of weight
+            if (_currentWeapon != null)
+            {
+                float walkSpeed = _currentWeapon.GetWeaponWalkSpeed();
+                float runSpeed = _currentWeapon.GetWeaponRunSpeed();
 
-            float newWalkSpeed = _originalWalkSpeed * speedMultiplier;
-            float newRunSpeed = _originalRunSpeed * speedMultiplier;
+                AdjustMovementSpeed(walkSpeed, runSpeed);
 
-            AdjustMovementSpeed(newWalkSpeed, newRunSpeed);
+                // Debug message to ensure speeds are set correctly
+                Debug.Log($"Adjusted Walk Speed: {walkSpeed}, Run Speed: {runSpeed} based on weapon.");
+            }
+            else
+            {
+                ResetMovementSpeed();
+            }
         }
 
 #if ENABLE_INPUT_SYSTEM
         public void OnMove(InputValue value)
         {
             _inputDirection = value.Get<Vector2>();
-
-            if (_isReloading)
-            {
-                _desiredGait.velocity = movementSettings.walking.velocity;
-                _desiredGait.velocity = movementSettings.sprinting.velocity;
-            }
         }
 
         public void OnCrouch()

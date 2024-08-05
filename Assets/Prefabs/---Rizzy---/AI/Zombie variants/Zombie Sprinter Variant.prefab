@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
       propertyPath: runSpeed
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
@@ -71,7 +71,7 @@ PrefabInstance:
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
       propertyPath: dropChance
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
@@ -157,6 +157,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5959780442922906930, guid: 518afac762212ed4dac8eea775516a92,
         type: 3}
+    - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
+        type: 3}
+      propertyPath: idleAnimations.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2109202772903323211, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -206,6 +211,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6918448214537863223, guid: 73b915c26b44a554e883edbf6495ad13,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.404
       objectReference: {fileID: 0}
     - target: {fileID: 6918448214537863223, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
