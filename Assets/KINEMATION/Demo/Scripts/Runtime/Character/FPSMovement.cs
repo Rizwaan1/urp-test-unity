@@ -462,17 +462,16 @@ namespace Demo.Scripts.Runtime.Character
             AdjustMovementSpeedBasedOnWeapon();
         }
 
-        // Method to adjust movement speed based on weapon properties
+        // Method to adjust movement speed based on weapon weight
         private void AdjustMovementSpeedBasedOnWeapon()
         {
-            if (_currentWeapon != null)
-            {
-                AdjustMovementSpeed(_currentWeapon.GetWeaponWalkSpeed(), _currentWeapon.GetWeaponRunSpeed());
-            }
-            else
-            {
-                ResetMovementSpeed();
-            }
+            float weight = _currentWeapon != null ? _currentWeapon.GetWeight() : 0f;
+            float speedMultiplier = 1f / (1f + weight / 10f); // Adjust the divisor to change the impact of weight
+
+            float newWalkSpeed = _originalWalkSpeed * speedMultiplier;
+            float newRunSpeed = _originalRunSpeed * speedMultiplier;
+
+            AdjustMovementSpeed(newWalkSpeed, newRunSpeed);
         }
 
 #if ENABLE_INPUT_SYSTEM
