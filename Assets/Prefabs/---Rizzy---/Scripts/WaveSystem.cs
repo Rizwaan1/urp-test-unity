@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MoreMountains.Feedbacks;
 
 [System.Serializable]
 public class Wave
@@ -20,17 +21,22 @@ public class WaveSystem : MonoBehaviour
     public float timeBetweenWaves = 5.0f; // Tijd tussen golven
     public float spawnRadius = 20.0f; // Radius waarin spawn points geldig zijn voor spawnen
 
+    public MMFeedbacks waveSoundFeedBack;
+
     private int currentWave = 0;
     private bool waveActive = false;
     private int zombiesAlive;
 
     void Start()
     {
+       
+
         if (enemiesPerWave.Count != maxWaves)
         {
             Debug.LogError("Zorg ervoor dat de lengte van enemiesPerWave overeenkomt met maxWaves.");
             return;
         }
+
         StartCoroutine(StartNextWave());
     }
 
@@ -50,6 +56,8 @@ public class WaveSystem : MonoBehaviour
             currentWave++;
             zombiesAlive = enemiesPerWave[currentWave - 1].enemies.Length; // Haal het aantal vijanden voor de huidige golf op
             waveText.text = "Wave: " + currentWave;
+            waveSoundFeedBack?.PlayFeedbacks();
+
 
             yield return new WaitForSeconds(timeBetweenWaves);
 

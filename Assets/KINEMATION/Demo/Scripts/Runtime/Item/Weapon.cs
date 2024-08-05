@@ -25,6 +25,11 @@ namespace Demo.Scripts.Runtime.Item
         [Header("General")]
         [SerializeField][Range(0f, 120f)] private float fieldOfView = 90f;
 
+        [Header("Weapon Stats")]
+        [SerializeField] private float weight = 3f; // Add this line for weapon weight
+        [SerializeField] private float weaponWalkSpeed = 4f; // Movement speed with this weapon
+        [SerializeField] private float weaponRunSpeed = 8f;  // Sprint speed with this weapon
+
         [Header("Animations")]
         [SerializeField] private FPSAnimationAsset reloadClip;
         [SerializeField] private FPSCameraAnimation cameraReloadAnimation;
@@ -187,11 +192,15 @@ namespace Demo.Scripts.Runtime.Item
 
             currentAmmo = maxAmmo;
             UpdateAmmoUI();
+
+            // Set the current weapon in FPSMovement to adjust the speed
+            _fpsMovement.SetCurrentWeapon(this);
         }
 
         public override void OnUnEquip()
         {
             _controllerAnimator.CrossFade(CurveUnequip, 0.15f);
+            _fpsMovement.ResetMovementSpeed();  // Reset movement speed when weapon is unequipped
         }
 
         public override void OnUnarmedEnabled()
@@ -293,7 +302,7 @@ namespace Demo.Scripts.Runtime.Item
             currentAmmoBelt -= ammoToReload;
 
             _isReloading = false;
-            _fpsMovement.ResetMovementSpeed();  // Reset movement speed after reload
+            _fpsMovement.SetCurrentWeapon(this);  // Reapply movement speed after reload
             OnActionEnded();
             UpdateAmmoUI();
         }
@@ -427,6 +436,24 @@ namespace Demo.Scripts.Runtime.Item
             if (scopeGroups.Count == 0) return;
             scopeGroups[_scopeIndex].CycleAttachments(_fpsAnimator);
             UpdateAimPoint();
+        }
+
+        // Method to get the weapon's weight
+        public float GetWeight()
+        {
+            return weight;
+        }
+
+        // Method to get the weapon's walk speed
+        public float GetWeaponWalkSpeed()
+        {
+            return weaponWalkSpeed;
+        }
+
+        // Method to get the weapon's run speed
+        public float GetWeaponRunSpeed()
+        {
+            return weaponRunSpeed;
         }
     }
 }

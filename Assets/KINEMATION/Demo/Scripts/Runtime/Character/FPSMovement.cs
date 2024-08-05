@@ -1,3 +1,4 @@
+using Demo.Scripts.Runtime.Item;
 using KINEMATION.KAnimationCore.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Input;
 using UnityEngine;
@@ -93,6 +94,8 @@ namespace Demo.Scripts.Runtime.Character
         private float _originalWalkSpeed;
         private float _originalRunSpeed;
         private bool _isReloading = false;
+
+        private Weapon _currentWeapon;
 
         public bool IsInAir()
         {
@@ -450,6 +453,26 @@ namespace Demo.Scripts.Runtime.Character
             _desiredGait.velocity = _originalWalkSpeed;
             movementSettings.walking.velocity = _originalWalkSpeed;
             movementSettings.sprinting.velocity = _originalRunSpeed;
+        }
+
+        // Method to set the current weapon
+        public void SetCurrentWeapon(Weapon weapon)
+        {
+            _currentWeapon = weapon;
+            AdjustMovementSpeedBasedOnWeapon();
+        }
+
+        // Method to adjust movement speed based on weapon properties
+        private void AdjustMovementSpeedBasedOnWeapon()
+        {
+            if (_currentWeapon != null)
+            {
+                AdjustMovementSpeed(_currentWeapon.GetWeaponWalkSpeed(), _currentWeapon.GetWeaponRunSpeed());
+            }
+            else
+            {
+                ResetMovementSpeed();
+            }
         }
 
 #if ENABLE_INPUT_SYSTEM

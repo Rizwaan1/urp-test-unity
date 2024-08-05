@@ -754,6 +754,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fieldOfView: 90
+  weight: 3
+  weaponWalkSpeed: 3
+  weaponRunSpeed: 6
   reloadClip: {fileID: 11400000, guid: 93c514e68bc083d45b016a3d5f10d7bc, type: 2}
   cameraReloadAnimation: {fileID: 11400000, guid: b9c08f43ccbcf91449ee81a090e5f9cf,
     type: 2}
@@ -789,10 +792,14 @@ MonoBehaviour:
   reloadTime: 2
   gunShotFeedBack: {fileID: 4025906497005012}
   reloadMagFeedback: {fileID: 1413425049297376431}
+  maxAmmoBelt: 90
+  currentAmmoBelt: 0
   bulletPrefab: {fileID: 5590073534210264192, guid: 6cb7ab2d7526f6340a7165c9a045fbe3,
     type: 3}
   firePoint: {fileID: 430387970301253962}
   Noise: 0
+  reducedWalkSpeed: 1.5
+  reducedRunSpeed: 3
 --- !u!95 &2151158701131182720
 Animator:
   serializedVersion: 5

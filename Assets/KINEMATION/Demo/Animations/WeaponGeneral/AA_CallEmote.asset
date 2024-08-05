@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AA_CallEmote
   m_EditorClassIdentifier: 
   rigAsset: {fileID: 11400000, guid: 62a322d28a438724fa7c791ca3166fd3, type: 2}
-  clip: {fileID: 7400000, guid: 0cd2cee1cd3d04a47b48865f3a3900ae, type: 2}
+  clip: {fileID: -4448516763755982498, guid: ee13d3d899778074e8b1f185bc251ee2, type: 3}
   mask: {fileID: 31900000, guid: 63d3cad30ec294f47a09e8663bc62589, type: 2}
   overrideMask: {fileID: 31900000, guid: 682d359e285d23a409d85ef0a534d4c9, type: 2}
   isAdditive: 1

@@ -28,7 +28,7 @@ MonoBehaviour:
     velocity: 6
     velocitySmoothing: 3
   crouchRatio: 0.65
-  jumpHeight: 2
+  jumpHeight: 4
   airFriction: 0.3
   airVelocity: 0.4
   maxFallVelocity: 25

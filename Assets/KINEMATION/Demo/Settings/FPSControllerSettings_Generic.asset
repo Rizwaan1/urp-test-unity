@@ -46,7 +46,7 @@ MonoBehaviour:
   stopMotion: {fileID: 11400000, guid: df1c50775e86cd04d81a570dca084893, type: 2}
   leanMotion: {fileID: 11400000, guid: a493caf2a32529d4d88aff9ccf78e181, type: 2}
   timeScale: 1
-  equipDelay: 0.6
+  equipDelay: 0.8
   leanAngle: 25
   sensitivity: 1
   weaponBone:

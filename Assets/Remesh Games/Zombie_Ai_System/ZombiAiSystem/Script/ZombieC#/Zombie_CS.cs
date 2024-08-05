@@ -71,13 +71,42 @@ public class Zombie_CS : MonoBehaviour
 
     void Start()
     {
-        HealthBarUI = transform.Find("HealthBar_Canvas/Slider").GetComponent<Slider>();
-        Pos = transform.Find("Pos").GetComponent<Transform>();
-        ZombieNavMesh = GetComponent<NavMeshAgent>();
-        Anim = GetComponent<Animator>();
+        HealthBarUI = transform.Find("HealthBar_Canvas/Slider")?.GetComponent<Slider>();
+        if (HealthBarUI == null)
+        {
+            Debug.LogError("HealthBarUI Slider not found. Ensure the hierarchy is correct.");
+        }
 
-        Player = GameObject.Find(PlayerName).transform;
-        moneyManager = FindObjectOfType<MoneyManager>();  // Find the MoneyManager in the scene
+        Pos = transform.Find("Pos");
+        if (Pos == null)
+        {
+            Debug.LogError("Pos transform not found. Ensure the hierarchy is correct.");
+        }
+
+        ZombieNavMesh = GetComponent<NavMeshAgent>();
+        if (ZombieNavMesh == null)
+        {
+            Debug.LogError("NavMeshAgent component not found.");
+        }
+
+        Anim = GetComponent<Animator>();
+        if (Anim == null)
+        {
+            Debug.LogError("Animator component not found.");
+        }
+
+        Player = GameObject.Find(PlayerName)?.transform;
+        if (Player == null)
+        {
+            Debug.LogError($"Player with name {PlayerName} not found.");
+        }
+
+        moneyManager = FindObjectOfType<MoneyManager>();
+        if (moneyManager == null)
+        {
+            Debug.LogError("MoneyManager not found in the scene.");
+        }
+
         RandomDestroy = Random.Range(5.0f, 8.0f);
         ChackHit = false;
         if (Spawn == false)
@@ -165,7 +194,10 @@ public class Zombie_CS : MonoBehaviour
             LookAtTarget();
         }
 
-        HealthBarUI.value = Health / 100;
+        if (HealthBarUI != null)
+        {
+            HealthBarUI.value = Health / 100;
+        }
 
         if (Health > 0.0f)
         {
@@ -220,12 +252,18 @@ public class Zombie_CS : MonoBehaviour
 
         if (NumberHealth == 0 && Health > 0.0f)
         {
-            HealthBarUI.gameObject.SetActive(true);
+            if (HealthBarUI != null)
+            {
+                HealthBarUI.gameObject.SetActive(true);
+            }
         }
 
         if (NumberHealth == 1 && Health > 0.0f)
         {
-            HealthBarUI.gameObject.SetActive(false);
+            if (HealthBarUI != null)
+            {
+                HealthBarUI.gameObject.SetActive(false);
+            }
         }
 
         MakeNoise ZombieNoise = Player.GetComponent<MakeNoise>();
@@ -291,13 +329,15 @@ public class Zombie_CS : MonoBehaviour
     void Death()
     {
         isDead = true; // Set the isDead flag to true
-        Anim.SetBool("Attack", false);
-        HealthBarUI.gameObject.SetActive(false);
-        Anim.SetBool("Death", true);
-        int RandomDeath = Random.Range(1, 5);
-        Anim.SetInteger("Death_Int", RandomDeath);
-        ZombieNavMesh.speed = 0.0f;
-        this.GetComponent<Collider>().enabled = false;
+        if (HealthBarUI != null)
+        {
+            HealthBarUI.gameObject.SetActive(false);
+        }
+        Anim.enabled = false; // Disable the Animator
+        ZombieNavMesh.enabled = false; // Disable the NavMeshAgent
+
+        // Enable Ragdoll
+        EnableRagdoll();
 
         // Add money on death
         if (moneyManager != null)
@@ -316,9 +356,6 @@ public class Zombie_CS : MonoBehaviour
         {
             waveSystem.ZombieKilled(); // Informeert WaveSystem dat deze zombie is gedood
         }
-
-        // Disable NavMeshAgent to stop the zombie from following the player
-        ZombieNavMesh.enabled = false;
     }
 
     IEnumerator TimeToDestroy()
@@ -411,6 +448,34 @@ public class Zombie_CS : MonoBehaviour
         if (moneyManager != null && !isDead) // Ensure money is only added if the zombie is not dead
         {
             moneyManager.AddMoney(moneyPerHit);
+        }
+    }
+
+    // Function to enable ragdoll
+    void EnableRagdoll()
+    {
+        Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            rb.isKinematic = false;
+        }
+
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        foreach (Collider col in colliders)
+        {
+            col.enabled = true;
+        }
+
+        Collider mainCollider = GetComponent<Collider>();
+        if (mainCollider != null)
+        {
+            mainCollider.enabled = false;
+        }
+
+        Rigidbody mainRigidbody = GetComponent<Rigidbody>();
+        if (mainRigidbody != null)
+        {
+            mainRigidbody.isKinematic = true;
         }
     }
 }
