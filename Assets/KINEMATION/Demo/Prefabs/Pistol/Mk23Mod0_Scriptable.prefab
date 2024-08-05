@@ -628,7 +628,7 @@ MonoBehaviour:
   recoilPatternSettings: {fileID: 11400000, guid: b60711d0a5eabca449a3e2324c4d3483,
     type: 2}
   cameraShake: {fileID: 11400000, guid: 5563e5a81879bf3488e215990ceb8724, type: 2}
-  fireRate: 400
+  fireRate: 800
   supportsAuto: 0
   supportsBurst: 0
   burstLength: 0
@@ -645,11 +645,11 @@ MonoBehaviour:
     - {fileID: 7649588884087146613}
   maxAmmo: 10
   currentAmmo: 0
-  totalAmmo: 10
-  maxTotalAmmo: 10
   reloadTime: 2
   gunShotFeedBack: {fileID: 6273738335077481906}
   reloadMagFeedback: {fileID: 3726905090449781757}
+  maxAmmoBelt: 30
+  currentAmmoBelt: 0
   bulletPrefab: {fileID: 5590073534210264192, guid: 6cb7ab2d7526f6340a7165c9a045fbe3,
     type: 3}
   firePoint: {fileID: 6478812796411352031}
@@ -822,7 +822,7 @@ Transform:
   m_GameObject: {fileID: 7538859068492676617}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.055, z: 2.95}
+  m_LocalPosition: {x: 0, y: 0.055, z: 0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

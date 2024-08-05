@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -57,6 +58,16 @@ public class Zombie_CS : MonoBehaviour
 
     private MoneyManager moneyManager;
     private bool isDead = false; // Flag to track if the zombie is dead
+
+    // Add fields for drop system
+    public List<GameObject> dropItems; // The list of prefabs to drop
+    [Range(0, 100)]
+    public float dropChance = 30.0f; // Drop chance percentage
+
+    // Public fields to set movement speed and attack range
+    public float walkSpeed = 1.5f;
+    public float runSpeed = 3.0f;
+    public float attackRange = 1.3f;
 
     void Start()
     {
@@ -141,6 +152,9 @@ public class Zombie_CS : MonoBehaviour
 
     void Update()
     {
+        if (isDead) // Skip update logic if the zombie is dead
+            return;
+
         Anim.SetLayerWeight(Anim.GetLayerIndex("UpperBody"), 1);
 
         ReaytoFalse();
@@ -173,7 +187,7 @@ public class Zombie_CS : MonoBehaviour
         {
             if (IsMove == true)
             {
-                ZombieNavMesh.speed = 1.5f;
+                ZombieNavMesh.speed = walkSpeed;
                 ZombieNavMesh.destination = Player.position;
                 Anim.SetBool("Walk", true);
             }
@@ -188,7 +202,7 @@ public class Zombie_CS : MonoBehaviour
         {
             if (IsMove == true)
             {
-                ZombieNavMesh.speed = 3f;
+                ZombieNavMesh.speed = runSpeed;
                 ZombieNavMesh.destination = Player.position;
                 Anim.SetBool("Run", true);
             }
@@ -238,10 +252,9 @@ public class Zombie_CS : MonoBehaviour
     void CheckAttack()
     {
         RaycastHit hit;
-        float range = 1.3f;
-        Debug.DrawRay(Pos.position, Pos.transform.TransformDirection(Vector3.forward) * range, Color.green);
+        Debug.DrawRay(Pos.position, Pos.transform.TransformDirection(Vector3.forward) * attackRange, Color.green);
 
-        if (Physics.Raycast(Pos.position, Pos.transform.TransformDirection(Vector3.forward), out hit, range))
+        if (Physics.Raycast(Pos.position, Pos.transform.TransformDirection(Vector3.forward), out hit, attackRange))
         {
             if (hit.transform.gameObject.name == PlayerName)
             {
@@ -264,10 +277,9 @@ public class Zombie_CS : MonoBehaviour
     public void EventAttack()
     {
         RaycastHit hit;
-        float range = 1.3f;
-        Debug.DrawRay(Pos.position, Pos.transform.TransformDirection(Vector3.forward) * range, Color.red);
+        Debug.DrawRay(Pos.position, Pos.transform.TransformDirection(Vector3.forward) * attackRange, Color.red);
 
-        if (Physics.Raycast(Pos.position, Pos.transform.TransformDirection(Vector3.forward), out hit, range))
+        if (Physics.Raycast(Pos.position, Pos.transform.TransformDirection(Vector3.forward), out hit, attackRange))
         {
             if (hit.transform.gameObject.name == PlayerName)
             {
@@ -293,6 +305,9 @@ public class Zombie_CS : MonoBehaviour
             moneyManager.AddMoney(moneyOnDeath);
         }
 
+        // Try to drop an item
+        TryDropItem();
+
         if (NumberDestroy == 0)
         {
             StartCoroutine(TimeToDestroy());
@@ -301,6 +316,9 @@ public class Zombie_CS : MonoBehaviour
         {
             waveSystem.ZombieKilled(); // Informeert WaveSystem dat deze zombie is gedood
         }
+
+        // Disable NavMeshAgent to stop the zombie from following the player
+        ZombieNavMesh.enabled = false;
     }
 
     IEnumerator TimeToDestroy()
@@ -311,6 +329,20 @@ public class Zombie_CS : MonoBehaviour
             waveSystem.ZombieKilled(); // Informeert WaveSystem dat deze zombie is gedood
         }
         Destroy(gameObject);
+    }
+
+    // Function to try dropping an item
+    void TryDropItem()
+    {
+        if (dropItems.Count > 0)
+        {
+            float dropRoll = Random.Range(0f, 100f);
+            if (dropRoll <= dropChance)
+            {
+                int randomIndex = Random.Range(0, dropItems.Count);
+                Instantiate(dropItems[randomIndex], transform.position, Quaternion.identity);
+            }
+        }
     }
 
     public void MakeNoise(float Loudness)

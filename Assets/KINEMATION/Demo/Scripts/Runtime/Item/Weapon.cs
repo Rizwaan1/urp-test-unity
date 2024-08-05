@@ -49,12 +49,12 @@ namespace Demo.Scripts.Runtime.Item
         [SerializeField] private List<AttachmentGroup<ScopeAttachment>> scopeGroups = new List<AttachmentGroup<ScopeAttachment>>();
 
         [Header("Ammo")]
-        [SerializeField] private int maxAmmo = 30; // Magazine ammo capacity
-        [SerializeField] private int currentAmmo; // Current ammo in the magazine
-        [SerializeField] private int totalAmmo = 90; // Total ammo pool
-        [SerializeField] private int maxTotalAmmo = 90; // Maximum total ammo pool
+        [SerializeField] private int maxAmmo = 30;
+        [SerializeField] private int currentAmmo;
         [SerializeField] private float reloadTime = 2f;
         [SerializeField] public MMFeedbacks gunShotFeedBack, reloadMagFeedback;
+        [SerializeField] private float maxAmmoBelt = 90f; // Maximum ammo belt capacity
+        [SerializeField] private float currentAmmoBelt; // Current ammo belt
 
         [Header("Shooting")]
         [SerializeField] private GameObject bulletPrefab;
@@ -86,6 +86,27 @@ namespace Demo.Scripts.Runtime.Item
         private static readonly int OverlayType = Animator.StringToHash("OverlayType");
         private static readonly int CurveEquip = Animator.StringToHash("CurveEquip");
         private static readonly int CurveUnequip = Animator.StringToHash("CurveUnequip");
+
+        private AmmoUIManager _ammoUIManager;
+
+        private void Awake()
+        {
+            _ammoUIManager = FindObjectOfType<AmmoUIManager>();
+        }
+
+        private void Start()
+        {
+            currentAmmoBelt = maxAmmoBelt; // Initialize current ammo belt to max ammo belt at start
+            UpdateAmmoUI();
+        }
+
+        private void UpdateAmmoUI()
+        {
+            if (_ammoUIManager != null)
+            {
+                _ammoUIManager.UpdateAmmoUI(currentAmmo, currentAmmoBelt);
+            }
+        }
 
         private void OnActionEnded()
         {
@@ -165,6 +186,7 @@ namespace Demo.Scripts.Runtime.Item
             _controllerAnimator.CrossFade(CurveEquip, 0.15f);
 
             currentAmmo = maxAmmo;
+            UpdateAmmoUI();
         }
 
         public override void OnUnEquip()
@@ -236,7 +258,7 @@ namespace Demo.Scripts.Runtime.Item
 
         public override bool OnReload()
         {
-            if (_isReloading || currentAmmo == maxAmmo || totalAmmo <= 0)
+            if (_isReloading || currentAmmo == maxAmmo || currentAmmoBelt <= 0)
             {
                 return false;
             }
@@ -264,18 +286,22 @@ namespace Demo.Scripts.Runtime.Item
 
         private void FinishReload()
         {
-            int ammoToReload = maxAmmo - currentAmmo;
-            if (totalAmmo < ammoToReload)
-            {
-                ammoToReload = totalAmmo;
-            }
+            int ammoNeeded = maxAmmo - currentAmmo;
+            int ammoToReload = Mathf.Min(ammoNeeded, (int)currentAmmoBelt);
 
             currentAmmo += ammoToReload;
-            totalAmmo -= ammoToReload;
+            currentAmmoBelt -= ammoToReload;
 
             _isReloading = false;
             _fpsMovement.ResetMovementSpeed();  // Reset movement speed after reload
             OnActionEnded();
+            UpdateAmmoUI();
+        }
+
+        public void RefillAmmoBelt(float amount)
+        {
+            currentAmmoBelt = Mathf.Clamp(currentAmmoBelt + amount, 0, maxAmmoBelt); // Ensure it does not exceed maxAmmoBelt
+            UpdateAmmoUI();
         }
 
         public override bool OnGrenadeThrow()
@@ -313,6 +339,7 @@ namespace Demo.Scripts.Runtime.Item
             gunShotFeedBack?.PlayFeedbacks();
 
             currentAmmo--;
+            UpdateAmmoUI();
 
             if (bulletPrefab != null && firePoint != null)
             {

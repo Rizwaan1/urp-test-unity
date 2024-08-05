@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
       propertyPath: runSpeed
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
@@ -61,12 +61,33 @@ PrefabInstance:
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
       propertyPath: walkSpeed
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
       propertyPath: PlayerName
       value: FPSGenericPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
+        type: 3}
+      propertyPath: dropChance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
+        type: 3}
+      propertyPath: dropPrefab
+      value: 
+      objectReference: {fileID: 8171348558777357090, guid: 0a1c7dc0cb741b04faccc29c0e333a50,
+        type: 3}
+    - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
+        type: 3}
+      propertyPath: attackRange
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
+        type: 3}
+      propertyPath: moneyPerHit
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
@@ -76,7 +97,7 @@ PrefabInstance:
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
       propertyPath: moneyOnDeath
-      value: 60
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
@@ -95,6 +116,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
+      propertyPath: HealthBarState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
+        type: 3}
       propertyPath: specialAttackRange
       value: 20
       objectReference: {fileID: 0}
@@ -106,6 +132,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
+      propertyPath: dropItems.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
+        type: 3}
       propertyPath: AttackActivationState
       value: 0
       objectReference: {fileID: 0}
@@ -114,6 +145,18 @@ PrefabInstance:
       propertyPath: NumberAttackActivation
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
+        type: 3}
+      propertyPath: dropItems.Array.data[0]
+      value: 
+      objectReference: {fileID: 8171348558777357090, guid: 0a1c7dc0cb741b04faccc29c0e333a50,
+        type: 3}
+    - target: {fileID: 1932006592220411619, guid: 73b915c26b44a554e883edbf6495ad13,
+        type: 3}
+      propertyPath: dropItems.Array.data[1]
+      value: 
+      objectReference: {fileID: 5959780442922906930, guid: 518afac762212ed4dac8eea775516a92,
+        type: 3}
     - target: {fileID: 2109202772903323211, guid: 73b915c26b44a554e883edbf6495ad13,
         type: 3}
       propertyPath: m_LocalPosition.x
