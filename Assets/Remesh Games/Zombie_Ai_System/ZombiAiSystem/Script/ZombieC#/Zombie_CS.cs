@@ -88,6 +88,10 @@ public class Zombie_CS : MonoBehaviour
         {
             Debug.LogError("NavMeshAgent component not found.");
         }
+        else
+        {
+            ZombieNavMesh.updatePosition = false; // Prevent NavMeshAgent from updating position
+        }
 
         Anim = GetComponent<Animator>();
         if (Anim == null)
@@ -274,6 +278,9 @@ public class Zombie_CS : MonoBehaviour
                 ChackHit = true;
             }
         }
+
+        // Manually update the position based on NavMeshAgent
+        transform.position = ZombieNavMesh.nextPosition;
     }
 
     void LookAtTarget()

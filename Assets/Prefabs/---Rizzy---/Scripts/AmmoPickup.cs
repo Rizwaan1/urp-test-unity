@@ -1,3 +1,4 @@
+using Demo.Scripts.Runtime.Character; // Voeg de juiste namespace toe
 using Demo.Scripts.Runtime.Item;
 using UnityEngine;
 

@@ -22,10 +22,10 @@ MonoBehaviour:
     velocity: 1.1
     velocitySmoothing: 4
   walking:
-    velocity: 3
+    velocity: 6
     velocitySmoothing: 3
   sprinting:
-    velocity: 3
+    velocity: 9
     velocitySmoothing: 3
   crouchRatio: 0.65
   jumpHeight: 4
@@ -86,3 +86,5 @@ MonoBehaviour:
     m_RotationOrder: 4
   slideDirectionSmoothing: 15
   slideSpeed: 0.9
+  baseMoveSpeed: 5
+  baseSprintSpeed: 6

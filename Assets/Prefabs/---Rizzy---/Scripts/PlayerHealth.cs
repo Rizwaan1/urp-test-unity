@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using MoreMountains.Feedbacks;
 using System.Collections;
+using Demo.Scripts.Runtime.Character;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -15,10 +16,16 @@ public class PlayerHealth : MonoBehaviour
     public Text healthText; // Reference to the UI Text component
     public Slider healthSlider; // Reference to the UI Slider component
 
+    public float walkSpeed = 5f; // Walk speed of the player
+    public float runSpeed = 10f; // Run speed of the player
+
     private float currentHealth; // Current health of the player
     private Rigidbody rb; // Rigidbody component reference
     private bool lowHealthFeedbackPlayed = false; // To ensure the low health feedback is played only once
     private Coroutine regenerationCoroutine; // Reference to the regeneration coroutine
+
+    private FPSMovement fpsMovement; // Reference to the FPSMovement script
+    private PurchaseManager purchaseManager; // Reference to the PurchaseManager script
 
     void Start()
     {
@@ -28,6 +35,18 @@ public class PlayerHealth : MonoBehaviour
         {
             // Optionally freeze rotation to prevent unwanted rotation
             rb.freezeRotation = true;
+        }
+
+        fpsMovement = GetComponent<FPSMovement>();
+        if (fpsMovement != null)
+        {
+            fpsMovement.AdjustMovementSpeed(walkSpeed, runSpeed);
+        }
+
+        purchaseManager = FindObjectOfType<PurchaseManager>();
+        if (purchaseManager == null)
+        {
+            Debug.LogError("PurchaseManager not found in the scene.");
         }
 
         // Initialize the UI elements
@@ -144,6 +163,42 @@ public class PlayerHealth : MonoBehaviour
         if (healthSlider != null)
         {
             healthSlider.value = currentHealth / maxHealth;
+        }
+    }
+
+    // Method to increase max health
+    public void IncreaseMaxHealth(float amount)
+    {
+        maxHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0f, maxHealth);
+        Debug.Log("Max health increased by " + amount + ". New max health: " + maxHealth);
+
+        UpdateHealthUI();
+    }
+
+    // Method to increase movement speed
+    public void IncreaseMovementSpeed(float walkAmount, float runAmount)
+    {
+        walkSpeed += walkAmount;
+        runSpeed += runAmount;
+        if (fpsMovement != null)
+        {
+            fpsMovement.AdjustMovementSpeed(walkSpeed, runSpeed);
+        }
+        Debug.Log("Movement speed increased. New walk speed: " + walkSpeed + ", New run speed: " + runSpeed);
+    }
+
+    // Method to purchase and apply an item
+    public void PurchaseAndApplyItem(ShopItem item, float cost)
+    {
+        if (purchaseManager != null && purchaseManager.PurchaseItem(cost))
+        {
+            item.ApplyItem();
+            Debug.Log("Purchased and applied item: " + item.itemType);
+        }
+        else
+        {
+            Debug.Log("Not enough money to purchase the item.");
         }
     }
 }
