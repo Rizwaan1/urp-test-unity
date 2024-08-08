@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using MoreMountains.Feedbacks;
 using System.Collections;
+using System;
 using Demo.Scripts.Runtime.Character;
 
 public class PlayerHealth : MonoBehaviour
@@ -27,13 +28,17 @@ public class PlayerHealth : MonoBehaviour
     private FPSMovement fpsMovement; // Reference to the FPSMovement script
     private PurchaseManager purchaseManager; // Reference to the PurchaseManager script
 
+    public static event Action OnPlayerDamaged;
+
+    public float CurrentHealth => currentHealth; // Public getter for current health
+    public float MaxHealth => maxHealth; // Public getter for max health
+
     void Start()
     {
-        currentHealth = maxHealth; // Initialize the player's health to maximum at the start
-        rb = GetComponent<Rigidbody>(); // Get the Rigidbody component
+        currentHealth = maxHealth;
+        rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            // Optionally freeze rotation to prevent unwanted rotation
             rb.freezeRotation = true;
         }
 
@@ -49,52 +54,44 @@ public class PlayerHealth : MonoBehaviour
             Debug.LogError("PurchaseManager not found in the scene.");
         }
 
-        // Initialize the UI elements
         UpdateHealthUI();
     }
 
-    // Method to handle taking damage
     public void TakeDamage(float amount)
     {
-        currentHealth -= amount; // Reduce the player's health by the damage amount
+        currentHealth -= amount;
         Debug.Log("Player took damage: " + amount + ", Current health: " + currentHealth);
         getHitFeedBack?.PlayFeedbacks();
-
-        // Update the UI elements
         UpdateHealthUI();
 
-        // Stop the regeneration coroutine if it's running
         if (regenerationCoroutine != null)
         {
             StopCoroutine(regenerationCoroutine);
         }
 
-        // Check if the player's health falls below the low health threshold
         if (currentHealth <= lowHealthThreshold && !lowHealthFeedbackPlayed)
         {
             onLowHealthFeedBack?.PlayFeedbacks();
-            lowHealthFeedbackPlayed = true; // Ensure the feedback is played only once
+            lowHealthFeedbackPlayed = true;
         }
 
-        // Check if the player's health is depleted
         if (currentHealth <= 0f)
         {
-            Die(); // Call the Die method if health is depleted
+            Die();
         }
         else
         {
-            // Start the regeneration coroutine
             regenerationCoroutine = StartCoroutine(RegenerateHealth());
         }
+
+        OnPlayerDamaged?.Invoke();
     }
 
-    // Method to handle player death
     void Die()
     {
         Debug.Log("Player died!");
         onDeathFeedBack?.PlayFeedbacks();
 
-        // Spawn the object at the specified spawn point
         if (objectToSpawn != null && spawnPoint != null)
         {
             Instantiate(objectToSpawn, spawnPoint.position, spawnPoint.rotation);
@@ -103,56 +100,46 @@ public class PlayerHealth : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Optional method to heal the player
     public void Heal(float amount)
     {
-        currentHealth += amount; // Increase the player's health by the healing amount
-        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth); // Ensure health does not exceed maxHealth
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
         Debug.Log("Player healed: " + amount + ", Current health: " + currentHealth);
 
-        // Update the UI elements
         UpdateHealthUI();
 
-        // Reset the low health feedback if the player's health goes above the threshold
         if (currentHealth > lowHealthThreshold)
         {
             lowHealthFeedbackPlayed = false;
         }
     }
 
-    // Coroutine to handle health regeneration
     private IEnumerator RegenerateHealth()
     {
-        // Wait for the specified delay before starting regeneration
         yield return new WaitForSeconds(regenerationDelay);
 
-        // Regenerate health over time until the player reaches max health or takes damage
         while (currentHealth < maxHealth)
         {
             currentHealth += regenerationRate * Time.deltaTime;
             currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
             Debug.Log("Regenerating health: " + currentHealth);
 
-            // Update the UI elements
             UpdateHealthUI();
 
             yield return null;
         }
     }
 
-    // This method will call TakeDamage to reduce the player's health
     public void ApplyDamagezombie(float damage)
     {
         TakeDamage(damage);
     }
 
-    // Method to handle object pickup and heal the player
     public void PickupHealthObject(float healAmount)
     {
         Heal(healAmount);
     }
 
-    // Method to update the UI elements
     private void UpdateHealthUI()
     {
         if (healthText != null)
@@ -166,7 +153,6 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // Method to increase max health
     public void IncreaseMaxHealth(float amount)
     {
         maxHealth += amount;
@@ -176,7 +162,6 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealthUI();
     }
 
-    // Method to increase movement speed
     public void IncreaseMovementSpeed(float walkAmount, float runAmount)
     {
         walkSpeed += walkAmount;
@@ -188,7 +173,6 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Movement speed increased. New walk speed: " + walkSpeed + ", New run speed: " + runSpeed);
     }
 
-    // Method to purchase and apply an item
     public void PurchaseAndApplyItem(ShopItem item, float cost)
     {
         if (purchaseManager != null && purchaseManager.PurchaseItem(cost))

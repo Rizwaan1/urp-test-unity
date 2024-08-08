@@ -11,7 +11,6 @@ public class BulletPerfect : MonoBehaviour
     public GameObject bulletVisual, explosionPrefab;
     public Transform bulletTransform;
 
-
     public KeyCode NoiseKey;
     [HideInInspector]
     public bool Noise;
@@ -20,6 +19,9 @@ public class BulletPerfect : MonoBehaviour
     [SerializeField] public MMFeedbacks onHit, onSpawn;
 
     public bool forPlayer, forEnemy;
+
+    private const string PlayerTag = "Player";
+    private const string EnemyTag = "Enemy";
 
     void Start()
     {
@@ -39,78 +41,68 @@ public class BulletPerfect : MonoBehaviour
         if (timer > 0.0f)
         {
             timer -= Time.deltaTime;
-
         }
 
-
-        
-        
-        
-
-        if (Noise == true && timer <= 0.0f)
+        if (Noise && timer <= 0.0f)
         {
-
             Noise = false;
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        // Functie die wordt aangeroepen wanneer de kogel iets raakt
         HandleCollision(collision);
-
-        // Vernietig de kogel na impact
         Destroy(bulletVisual);
         Destroy(gameObject);
     }
 
     void HandleCollision(Collision collision)
     {
-        // Instantiate explosie effect
-        // Logic for handling explosion effect (if any) can be added here
-
-        if (forPlayer)
+        if (forPlayer && collision.gameObject.CompareTag(PlayerTag))
         {
-            // Logica voor het raken van een vijand
-            if (collision.gameObject.CompareTag("Player"))
-            {
-                // Voorbeeld van het toebrengen van schade aan een vijand
-                PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
-                if (player != null)
-                {
-                    player.TakeDamage(damage); // Schade toebrengen aan de vijand
-                }
-            }
-
-            // Andere logica voor andere soorten objecten kan hier ook worden toegevoegd
-            Debug.Log("Bullet hit: " + collision.gameObject.name);
+            ApplyDamageToPlayer(collision);
         }
 
         if (forEnemy)
         {
-            // Logica voor het raken van een vijand
-            if (collision.gameObject.CompareTag("Enemy"))
+            if (collision.gameObject.CompareTag(EnemyTag))
             {
-                // Voorbeeld van het toebrengen van schade aan een vijand
-                EnemyHealth enemy = collision.gameObject.GetComponent<EnemyHealth>();
-                if (enemy != null)
-                {
-                    onHit?.PlayFeedbacks();
-                    enemy.TakeDamage(damage); // Schade toebrengen aan de vijand
-                }
+                ApplyDamageToEnemy(collision);
             }
-
-            // Logica voor het raken van een zombie
-            Zombie_CS zombie = collision.gameObject.GetComponent<Zombie_CS>();
-            if (zombie != null)
+            else
             {
-                onHit?.PlayFeedbacks();
-                
-                zombie.EnemyDamage(damage); // Schade toebrengen aan de zombie
+                ApplyDamageToZombie(collision);
             }
+        }
 
-            // Andere logica voor andere soorten objecten kan hier ook worden toegevoegd
-            Debug.Log("Bullet hit: " + collision.gameObject.name);
+        onHit?.PlayFeedbacks();
+        Debug.Log("Bullet hit: " + collision.gameObject.name);
+    }
+
+    void ApplyDamageToPlayer(Collision collision)
+    {
+        PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
+        if (player != null)
+        {
+            player.TakeDamage(damage);
+        }
+    }
+
+    void ApplyDamageToEnemy(Collision collision)
+    {
+        EnemyHealth enemy = collision.gameObject.GetComponent<EnemyHealth>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
+        }
+    }
+
+    void ApplyDamageToZombie(Collision collision)
+    {
+        Zombie_CS zombie = collision.gameObject.GetComponent<Zombie_CS>();
+        if (zombie != null)
+        {
+            zombie.EnemyDamage(damage);
         }
     }
 }

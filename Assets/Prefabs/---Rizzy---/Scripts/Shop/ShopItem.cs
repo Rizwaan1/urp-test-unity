@@ -9,12 +9,12 @@ public class ShopItem : MonoBehaviour, IInteractable
     }
 
     public ItemType itemType;
-    public float value; // The value to increase (e.g., health amount or speed)
-    public float cost; // The cost of the item
+    public float value;
+    public float cost;
 
     private PlayerHealth playerHealth;
     private PurchaseManager purchaseManager;
-    private bool isPurchased = false; // Track if the item has been purchased
+    private bool isPurchased = false;
 
     void Start()
     {
@@ -43,7 +43,7 @@ public class ShopItem : MonoBehaviour, IInteractable
         if (purchaseManager.PurchaseItem(cost))
         {
             ApplyItem();
-            isPurchased = true; // Mark the item as purchased
+            isPurchased = true;
         }
         else
         {
@@ -59,7 +59,7 @@ public class ShopItem : MonoBehaviour, IInteractable
                 playerHealth.IncreaseMaxHealth(value);
                 break;
             case ItemType.MovementSpeed:
-                playerHealth.IncreaseMovementSpeed(value, value * 2); // Example: walkAmount and runAmount
+                playerHealth.IncreaseMovementSpeed(value, value);
                 break;
         }
         Debug.Log("Purchased and applied item: " + itemType);

@@ -22,13 +22,13 @@ MonoBehaviour:
     velocity: 1.1
     velocitySmoothing: 4
   walking:
-    velocity: 6
+    velocity: 5
     velocitySmoothing: 3
   sprinting:
-    velocity: 9
+    velocity: 10
     velocitySmoothing: 3
   crouchRatio: 0.65
-  jumpHeight: 4
+  jumpHeight: 3
   airFriction: 0.3
   airVelocity: 0.4
   maxFallVelocity: 25

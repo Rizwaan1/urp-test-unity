@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9391b1be34a09b44c81f7de50012f1c0, type: 3}
+  m_Name: Shocker
+  m_EditorClassIdentifier: 
+  initialShockPrefab: {fileID: 4922659033416720293, guid: e3f2adf95423d494fb1bff5a380480f4,
+    type: 3}
+  damageShockPrefab: {fileID: 6974084246394710616, guid: b202acbc71e0a8242a574cbd85ce4cc6,
+    type: 3}
+  shockDelay: 1
+  shockDamage: 10
+  targetTags:
+  - Enemy
+  additionalShockDelays:
+  - 0.5
+  - 0.7
+  - 0.9

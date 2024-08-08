@@ -454,32 +454,6 @@ namespace Demo.Scripts.Runtime.Character
             movementSettings.sprinting.velocity = _originalRunSpeed;
         }
 
-        // Method to set the current weapon
-        public void SetCurrentWeapon(Weapon weapon)
-        {
-            _currentWeapon = weapon;
-            AdjustMovementSpeedBasedOnWeapon();
-        }
-
-        // Method to adjust movement speed based on weapon weight
-        private void AdjustMovementSpeedBasedOnWeapon()
-        {
-            if (_currentWeapon != null)
-            {
-                float walkSpeed = _currentWeapon.GetWeaponWalkSpeed();
-                float runSpeed = _currentWeapon.GetWeaponRunSpeed();
-
-                AdjustMovementSpeed(walkSpeed, runSpeed);
-
-                // Debug message to ensure speeds are set correctly
-                Debug.Log($"Adjusted Walk Speed: {walkSpeed}, Run Speed: {runSpeed} based on weapon.");
-            }
-            else
-            {
-                ResetMovementSpeed();
-            }
-        }
-
 #if ENABLE_INPUT_SYSTEM
         public void OnMove(InputValue value)
         {
