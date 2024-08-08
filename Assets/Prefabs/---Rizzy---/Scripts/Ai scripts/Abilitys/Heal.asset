@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 541bf7655e3cffe498bf0b4b753bf4db, type: 3}
   m_Name: Heal
   m_EditorClassIdentifier: 
-  healAmount: 20
-  regenerationBoost: 5
-  boostDuration: 3
+  healAmount: 50
+  regenerationBoost: 10
+  boostDuration: 10
   healSound: {fileID: 8300000, guid: 6e6dc155380b19348ae902a57476e12a, type: 3}

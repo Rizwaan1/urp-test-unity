@@ -38,6 +38,7 @@ public class EnemyFollow : MonoBehaviour
         else
         {
             navAgent.speed = normalSpeed; // Stel de snelheid in op de normale snelheid
+            navAgent.stoppingDistance = minDistance; // Stel de stopping distance in op de minimale afstand
         }
     }
 
@@ -56,9 +57,8 @@ public class EnemyFollow : MonoBehaviour
                 navAgent.speed = normalSpeed; // Normale snelheid als binnen de buitenste radius
             }
 
-            if (distanceToTarget <= followRadius && distanceToTarget > minDistance)
+            if (distanceToTarget <= followRadius)
             {
-                // Beweeg richting het doelwit
                 navAgent.SetDestination(target.position);
             }
 

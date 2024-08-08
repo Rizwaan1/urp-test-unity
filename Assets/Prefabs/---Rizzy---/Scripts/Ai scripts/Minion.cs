@@ -9,11 +9,15 @@ public class Minion : MonoBehaviour
     public string[] targetTags; // Tags van mogelijke doelwitten (bijv. "Player", "Enemy")
     public GameObject explosionEffect; // Prefab voor het explosie-effect
 
+    public float minSize = 0.5f; // Minimum grootte van de minion
+    public float maxSize = 2f; // Maximale grootte van de minion
+
     private Transform target; // Doelwit van de minion
     private NavMeshAgent navMeshAgent;
 
     void Start()
     {
+        SetRandomSize(); // Stel een willekeurige grootte in bij het spawnen
         Destroy(gameObject, lifeTime); // Vernietig de minion na een bepaalde tijd
         navMeshAgent = GetComponent<NavMeshAgent>();
         FindClosestTarget(); // Zoek direct naar het dichtstbijzijnde doelwit
@@ -85,5 +89,11 @@ public class Minion : MonoBehaviour
 
         // Vernietig de minion na de explosie
         Destroy(gameObject);
+    }
+
+    void SetRandomSize()
+    {
+        float randomSize = Random.Range(minSize, maxSize);
+        transform.localScale = new Vector3(randomSize, randomSize, randomSize);
     }
 }

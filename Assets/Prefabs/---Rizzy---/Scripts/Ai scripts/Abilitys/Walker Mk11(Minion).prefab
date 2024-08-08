@@ -1267,7 +1267,7 @@ MonoBehaviour:
   AnimationFloorLevel: 0.001
   _Editor_Foldout_Setup_LegsList: 1
   _Editor_EnsureCount: 0
-  _Editor_OnValidateTrigger: 1
+  _Editor_OnValidateTrigger: 0
   _EditorAllowAutoUpdateFeetParams: 1
   _EditorCategory: 0
   _EditorSetupCategory: 0
@@ -1468,13 +1468,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 395022fb5b74ad744a3694be6a2c4706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 30
-  explosionRange: 3
-  explosionDamage: 15
+  lifeTime: 10
+  explosionRange: 5
+  explosionDamage: 35
   targetTags:
-  - Enemy
+  - Zombie
   explosionEffect: {fileID: 6271241949191652176, guid: 739d19610906a434a8d67ca770434aca,
     type: 3}
+  minSize: 0.1
+  maxSize: 0.5
 --- !u!195 &5771227049996541409
 NavMeshAgent:
   m_ObjectHideFlags: 0
