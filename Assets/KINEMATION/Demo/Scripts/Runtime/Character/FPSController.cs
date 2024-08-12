@@ -1,5 +1,3 @@
-// Designed by KINEMATION, 2024.
-
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
 using KINEMATION.KAnimationCore.Runtime.Input;
@@ -46,11 +44,14 @@ namespace Demo.Scripts.Runtime.Character
 
         private FPSAimState _aimState;
         private FPSActionState _actionState;
-        
+
         private bool _isUnarmed;
         private Animator _animator;
 
         public MoneyManager moneyManager;
+
+        // Voeg deze publieke variabele toe
+        [SerializeField] private int maxWeapons = 2;
 
         //~ Legacy Controller Interface
 
@@ -71,7 +72,7 @@ namespace Demo.Scripts.Runtime.Character
             {
                 return;
             }
-            
+
             _fpsAnimator.LinkAnimatorLayer(layerSettings);
         }
 
@@ -79,7 +80,7 @@ namespace Demo.Scripts.Runtime.Character
         {
             return _movementComponent.MovementState == FPSMovementState.Sprinting;
         }
-        
+
         private bool HasActiveAction()
         {
             return _actionState != FPSActionState.None;
@@ -93,7 +94,7 @@ namespace Demo.Scripts.Runtime.Character
         private void InitializeMovement()
         {
             _movementComponent = GetComponent<FPSMovement>();
-            
+
             _movementComponent.onJump.AddListener(() => { PlayTransitionMotion(settings.jumpingMotion); });
             _movementComponent.onLanded.AddListener(() => { PlayTransitionMotion(settings.jumpingMotion); });
 
@@ -108,12 +109,12 @@ namespace Demo.Scripts.Runtime.Character
             _movementComponent.slideCondition += () => !HasActiveAction();
             _movementComponent.sprintCondition += () => !HasActiveAction();
             _movementComponent.proneCondition += () => !HasActiveAction();
-            
+
             _movementComponent.onStopMoving.AddListener(() =>
             {
                 PlayTransitionMotion(settings.stopMotion);
             });
-            
+
             _movementComponent.onProneEnded.AddListener(() =>
             {
                 _userInput.SetValue(FPSANames.PlayablesWeight, 1f);
@@ -139,18 +140,19 @@ namespace Demo.Scripts.Runtime.Character
                 weapon.gameObject.SetActive(true);  // Begin met dit wapen geactiveerd
             }
         }
+
         public void BuyWeapon(GameObject weaponPrefab, float cost)
         {
             // Check if the player has enough money via MoneyManager
             if (moneyManager.SpendMoney(cost))
             {
-                // If already have 2 weapons, remove the active one and replace it
-                if (_instantiatedWeapons.Count >= 2)
+                // Als het maximale aantal wapens is bereikt, verwijder het actieve wapen
+                if (_instantiatedWeapons.Count >= maxWeapons)
                 {
                     RemoveCurrentWeapon();
                 }
 
-                // Instantiate and add the new weapon
+                // Instantiate en voeg het nieuwe wapen toe
                 var weapon = Instantiate(weaponPrefab, transform.position, Quaternion.identity);
                 var weaponTransform = weapon.transform;
                 weaponTransform.parent = _weaponBone;
@@ -158,7 +160,7 @@ namespace Demo.Scripts.Runtime.Character
                 weaponTransform.localRotation = Quaternion.identity;
                 _instantiatedWeapons.Add(weapon.GetComponent<FPSItem>());
 
-                // Equip the new weapon
+                // Rust het nieuwe wapen uit
                 _activeWeaponIndex = _instantiatedWeapons.Count - 1;
                 EquipWeapon();
             }
@@ -180,10 +182,6 @@ namespace Demo.Scripts.Runtime.Character
             // Reset active weapon index to the previous one
             _activeWeaponIndex = Mathf.Clamp(_activeWeaponIndex - 1, 0, _instantiatedWeapons.Count - 1);
         }
-
-
-
-
 
         private void Start()
         {
@@ -221,8 +219,8 @@ namespace Demo.Scripts.Runtime.Character
         {
             if (_instantiatedWeapons.Count == 0) return;
 
-            // Zorg ervoor dat alleen 2 wapens worden geladen
-            if (_instantiatedWeapons.Count > 2)
+            // Gebruik de maxWeapons variabele om te controleren of er niet te veel wapens zijn
+            if (_instantiatedWeapons.Count > maxWeapons)
             {
                 Debug.Log("Too many weapons equipped.");
                 return;
@@ -234,7 +232,6 @@ namespace Demo.Scripts.Runtime.Character
 
             _actionState = FPSActionState.None;
         }
-
 
         private void RemoveOldestWeapon()
         {
@@ -248,12 +245,11 @@ namespace Demo.Scripts.Runtime.Character
             Destroy(weaponToRemove.gameObject);
         }
 
-
         private void DisableAim()
         {
             if (GetActiveItem().OnAimReleased()) _aimState = FPSAimState.None;
         }
-        
+
         private void OnFirePressed()
         {
             if (_instantiatedWeapons.Count == 0 || HasActiveAction()) return;
@@ -271,7 +267,7 @@ namespace Demo.Scripts.Runtime.Character
             if (_instantiatedWeapons.Count == 0) return null;
             return _instantiatedWeapons[_activeWeaponIndex];
         }
-        
+
         private void OnSlideStarted()
         {
             _animator.CrossFade("Sliding", 0.1f);
@@ -292,7 +288,7 @@ namespace Demo.Scripts.Runtime.Character
         private void OnSprintEnded()
         {
             if (_animator.GetFloat("OverlayType") == 0) return;
-            
+
             _userInput.SetValue(FPSANames.StabilizationWeight, 1f);
             _userInput.SetValue(FPSANames.PlayablesWeight, 1f);
             _userInput.SetValue("LookLayerWeight", 1f);
@@ -307,7 +303,7 @@ namespace Demo.Scripts.Runtime.Character
         {
             PlayTransitionMotion(settings.crouchingMotion);
         }
-        
+
         private bool _isLeaning;
 
         private void StartWeaponChange(int newIndex)
@@ -325,17 +321,17 @@ namespace Demo.Scripts.Runtime.Character
             _previousWeaponIndex = _activeWeaponIndex;
             _activeWeaponIndex = newIndex;
         }
-        
+
         private void UpdateLookInput()
         {
             float scale = _userInput.GetValue<float>(_sensitivityMultiplierPropertyIndex);
-            
+
             float deltaMouseX = _lookDeltaInput.x * settings.sensitivity * scale;
             float deltaMouseY = -_lookDeltaInput.y * settings.sensitivity * scale;
-            
+
             _playerInput.y += deltaMouseY;
             _playerInput.x += deltaMouseX;
-            
+
             if (_recoilPattern != null)
             {
                 _playerInput += _recoilPattern.GetRecoilDelta();
@@ -346,9 +342,9 @@ namespace Demo.Scripts.Runtime.Character
             Vector2 pitchClamp = Vector2.Lerp(new Vector2(-90f, 90f), new Vector2(-30, 0f), proneWeight);
 
             _playerInput.y = Mathf.Clamp(_playerInput.y, pitchClamp.x, pitchClamp.y);
-            
+
             transform.rotation *= Quaternion.Euler(0f, deltaMouseX, 0f);
-            
+
             _userInput.SetValue(FPSANames.MouseDeltaInput, new Vector4(deltaMouseX, deltaMouseY));
             _userInput.SetValue(FPSANames.MouseInput, new Vector4(_playerInput.x, _playerInput.y));
         }
@@ -379,7 +375,7 @@ namespace Demo.Scripts.Runtime.Character
 
         public void OnThrowGrenade()
         {
-            if (IsSprinting()|| HasActiveAction() || !GetActiveItem().OnGrenadeThrow()) return;
+            if (IsSprinting() || HasActiveAction() || !GetActiveItem().OnGrenadeThrow()) return;
             _actionState = FPSActionState.PlayingAnimation;
         }
 
@@ -402,13 +398,13 @@ namespace Demo.Scripts.Runtime.Character
         public void OnFire(InputValue value)
         {
             if (IsSprinting()) return;
-            
+
             if (value.isPressed)
             {
                 OnFirePressed();
                 return;
             }
-            
+
             OnFireReleased();
         }
 
@@ -434,7 +430,7 @@ namespace Demo.Scripts.Runtime.Character
         {
             if (_movementComponent.PoseState == FPSPoseState.Prone) return;
             if (HasActiveAction() || _instantiatedWeapons.Count == 0) return;
-            
+
             StartWeaponChange(_activeWeaponIndex + 1 > _instantiatedWeapons.Count - 1 ? 0 : _activeWeaponIndex + 1);
         }
 
@@ -452,7 +448,7 @@ namespace Demo.Scripts.Runtime.Character
         public void OnCycleScope()
         {
             if (!IsAiming()) return;
-            
+
             GetActiveItem().OnCycleScope();
             PlayTransitionMotion(settings.aimingMotion);
         }
@@ -465,8 +461,8 @@ namespace Demo.Scripts.Runtime.Character
         public void OnToggleAttachmentEditing()
         {
             if (HasActiveAction() && _actionState != FPSActionState.AttachmentEditing) return;
-            
-            _actionState = _actionState == FPSActionState.AttachmentEditing 
+
+            _actionState = _actionState == FPSActionState.AttachmentEditing
                 ? FPSActionState.None : FPSActionState.AttachmentEditing;
 
             if (_actionState == FPSActionState.AttachmentEditing)
@@ -474,14 +470,14 @@ namespace Demo.Scripts.Runtime.Character
                 _animator.CrossFade("InspectStart", 0.2f);
                 return;
             }
-            
+
             _animator.CrossFade("InspectEnd", 0.3f);
         }
 
         public void OnDigitAxis(InputValue value)
         {
             if (!value.isPressed || _actionState != FPSActionState.AttachmentEditing) return;
-            GetActiveItem().OnAttachmentChanged((int) value.Get<float>());
+            GetActiveItem().OnAttachmentChanged((int)value.Get<float>());
         }
 #endif
     }

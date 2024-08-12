@@ -160,6 +160,72 @@ MonoBehaviour:
     name: 
     requiredType: 1
     Tooltip: 
+--- !u!114 &-8107997943295938244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c360632d4510a074baef619f3210b541, type: 3}
+  m_Name: SR_CellNeightbours-[Props]
+  m_EditorClassIdentifier: 
+  Logic: 0
+  Negate: 0
+  Global: 0
+  Enabled: 1
+  Ignore: 0
+  _editor_drawRule: 1
+  CellAllow: 0
+  AllConditionsMet: 1
+  CheckedCellsMustBe: 2
+  NeightbourNeeds: 0
+  occupiedByTag: 
+  CheckMode: 0
+  DirectCheck: 0
+  OffsetOrigin: {x: 0, y: 0, z: 0}
+  placement:
+    lu: 0
+    u: 0
+    ru: 1
+    l: 0
+    m: 0
+    r: 0
+    ld: 1
+    d: 0
+    rd: 0
+    UseAdvancedSetup: 0
+    AdvancedSetup: []
+  quartRotor:
+    q1: 1
+    q2: 0
+    q3: 0
+    q4: 0
+  OverrideRotation: 0
+  initRotation: 0
+  rotorEff: 90
+  spawnOn: 5
+  EachRotor: 0
+  CustomRotors:
+  - 0
+  - 0
+  - 0
+  - 0
+  GetNeightbourPos: 0
+  GetNeightbourRot: 0
+  GetNeightbourScale: 0
+  UseRestrictedDir: 0
+  CustomCellsCheck: 0
+  FullRotGet: 0
+  Check3DAngles: 0
+  RotationSpaceDisplay: 0
+  CheckPosit90: 1
+  CheckNeg90: 1
+  OverridePitchRotation: 1
+  InitPitchRotation: 0
+  NotCheckDefaultPitch: 0
 --- !u!114 &-8105121416736957338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +312,7 @@ MonoBehaviour:
   Enabled: 1
   Ignore: 0
   _editor_drawRule: 1
-  CellAllow: 0
+  CellAllow: 1
   AllConditionsMet: 1
   Module: 0
   CornerMode: 0
@@ -318,13 +384,49 @@ MonoBehaviour:
   Enabled: 1
   Ignore: 0
   _editor_drawRule: 1
-  CellAllow: 1
+  CellAllow: 0
   AllConditionsMet: 1
   Propability: 0.183
   PropabilityMulVariable:
     name: 
     requiredType: 1
     Tooltip: 
+--- !u!114 &-5259241317057878490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b496837ae5a0c3b4786589d6fb51e8d5, type: 3}
+  m_Name: SR_MoveRotateScale-[Props]
+  m_EditorClassIdentifier: 
+  Logic: 0
+  Negate: 0
+  Global: 0
+  Enabled: 1
+  Ignore: 0
+  _editor_drawRule: 1
+  CellAllow: 1
+  AllConditionsMet: 1
+  EffectOn: 0
+  ApplyMode: 0
+  Space: 0
+  GetCoords: 
+  CheckMode: 0
+  PositionOffset: {x: 0.32, y: 0, z: -0.35}
+  OffsetMode: 1
+  OffsetPosVariable:
+    name: 
+    requiredType: 5
+    Tooltip: Set Additive Vector3 Field Variable value to this property
+  RotationOffset: {x: 0, y: 90, z: 0}
+  ScaleMultiplier: {x: 1, y: 1, z: 1}
+  RandomizeOffset: {x: 0, y: 0, z: 0}
+  MaxDegreesSteps: {x: 1, y: 1, z: 1}
+  InheritScaleOffset: 0
 --- !u!114 &-5211450730764596289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,12 +450,11 @@ MonoBehaviour:
   DrawObjectStamps: 1
   OMultiStamp: {fileID: 0}
   PrefabsList:
-  - Prefab: {fileID: 168593224355469025, guid: 9412bd657b5a2c849af486db084a931a, type: 3}
-    MainCollider: {fileID: 64977345898077214, guid: 9412bd657b5a2c849af486db084a931a,
-      type: 3}
+  - Prefab: {fileID: 168593224355469025, guid: 974735362911e3d49b424954f26d86a4, type: 3}
+    MainCollider: {fileID: 64977345898077214, guid: 974735362911e3d49b424954f26d86a4, type: 3}
     subID: 0
     _refMesh: {fileID: 4300000, guid: c3e22f7865196734587618871a076b41, type: 3}
-    _refCol: {fileID: 64977345898077214, guid: 9412bd657b5a2c849af486db084a931a, type: 3}
+    _refCol: {fileID: 64977345898077214, guid: 974735362911e3d49b424954f26d86a4, type: 3}
   DrawMultiObjectStamps: 1
   Spawners:
   - Enabled: 1
@@ -378,14 +479,36 @@ MonoBehaviour:
     DisplayPreviewGUI: 1
     IsSubSpawner: 0
     _EditorDisplaySpawnerHeader: 1
+  - Enabled: 1
+    Name: Test Walls
+    SpawnerTag: 
+    StampPrefabID: 0
+    Parent: {fileID: -5211450730764596289}
+    Rules:
+    - {fileID: -4483676342376547894}
+    Mode: 0
+    CellCheckMode: 0
+    _Editor_SpawnerAdvancedOptionsFoldout: 0
+    OnScalledGrid: 0
+    Repeat: 1
+    DontInheritRotations: 0
+    SwitchSpawnedToStatic: 0
+    MultipleToSpawn: 0
+    UseGlobalRules: 1
+    UseParentPackageRules: 1
+    _wasEnablingGlobalRules: 1
+    ScaleAccess: 1
+    DisplayPreviewGUI: 1
+    IsSubSpawner: 0
+    _EditorDisplaySpawnerHeader: 1
   SubSpawners: []
   VariantOf: {fileID: 0}
   _editor_drawStamp: 1
   _editor_drawSpawners: 1
   _editor_drawGlobalRules: 0
   _editor_drawModPackRules: 0
-  _editor_shareSelected: 0
-  ParentPreset: {fileID: 0}
+  _editor_shareSelected: 1
+  ParentPreset: {fileID: 11400000}
   ParentPack: {fileID: 7046276862784204607}
 --- !u!114 &-4825212342304238856
 MonoBehaviour:
@@ -419,6 +542,73 @@ MonoBehaviour:
     name: 
     requiredType: 1
     Tooltip: 
+--- !u!114 &-4483676342376547894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 893e62798003cfc4ba6de159ef003bf2, type: 3}
+  m_Name: SR_WallPlacer-[walls]
+  m_EditorClassIdentifier: 
+  Logic: 0
+  Negate: 0
+  Global: 0
+  Enabled: 1
+  Ignore: 0
+  _editor_drawRule: 1
+  CellAllow: 1
+  AllConditionsMet: 1
+  Module: 0
+  CornerMode: 0
+  CornerMode45: 0
+  SpawnOnEachSide: 1
+  UseYLevel: -1
+  AutoRemoveOverlaps: 1
+  SetGhosts: 0
+  OverlapDetectMode: 0
+  Version2: 0
+  ScaleBounds: 0.99
+  Padding: 0
+  YawOffset: 90
+  DirectOffset: {x: 0, y: 2, z: 1.3}
+  OffsetMode: 0
+  IgnoreOtherMods: 1
+  DontCheckAdditionals: 0
+--- !u!114 &-4297141588334192879
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a80a4eda1baa814cb0a342f0acfc697, type: 3}
+  m_Name: SR_LimitSpawnCount-[Props]
+  m_EditorClassIdentifier: 
+  Logic: 0
+  Negate: 0
+  Global: 0
+  Enabled: 1
+  Ignore: 0
+  _editor_drawRule: 1
+  CellAllow: 0
+  AllConditionsMet: 1
+  Count:
+    Min: 1
+    Max: 1
+  CountMulVariable:
+    name: 
+    requiredType: 1
+    Tooltip: 
+  InheritFromCellsCount: 0
+  RoomCellsDivBy:
+    Min: 4
+    Max: 6
 --- !u!114 &-4165911157383638757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -640,7 +830,7 @@ MonoBehaviour:
   Enabled: 1
   Ignore: 0
   _editor_drawRule: 1
-  CellAllow: 1
+  CellAllow: 0
   AllConditionsMet: 1
   CheckedCellsMustBe: 1
   NeightbourNeeds: 0
@@ -755,6 +945,67 @@ MonoBehaviour:
   InitPitchRotation: 0
   NotCheckDefaultPitch: 0
 --- !u!114 &-2343410808507954995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc77d951f142764987a7f4ca1cf8f61, type: 3}
+  m_Name: SR_SpawningPropability-[Props]
+  m_EditorClassIdentifier: 
+  Logic: 0
+  Negate: 0
+  Global: 0
+  Enabled: 1
+  Ignore: 0
+  _editor_drawRule: 1
+  CellAllow: 1
+  AllConditionsMet: 1
+  Propability: 1
+  PropabilityMulVariable:
+    name: 
+    requiredType: 1
+    Tooltip: 
+--- !u!114 &-2198856809675068770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 893e62798003cfc4ba6de159ef003bf2, type: 3}
+  m_Name: SR_WallPlacer-[walls]
+  m_EditorClassIdentifier: 
+  Logic: 0
+  Negate: 0
+  Global: 0
+  Enabled: 0
+  Ignore: 0
+  _editor_drawRule: 1
+  CellAllow: 1
+  AllConditionsMet: 1
+  Module: 0
+  CornerMode: 0
+  CornerMode45: 0
+  SpawnOnEachSide: 0
+  UseYLevel: -1
+  AutoRemoveOverlaps: 1
+  SetGhosts: 0
+  OverlapDetectMode: 0
+  Version2: 0
+  ScaleBounds: 0.99
+  Padding: 0
+  YawOffset: 0
+  DirectOffset: {x: 0, y: 0, z: 0}
+  OffsetMode: 0
+  IgnoreOtherMods: 1
+  DontCheckAdditionals: 0
+--- !u!114 &-2075757131338877526
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1136,6 +1387,72 @@ MonoBehaviour:
     ToCheck:
     - {x: 0, y: 0, z: 0}
     EditorDisplayColor: {r: 0.4, g: 0.4, b: 1, a: 0.95}
+--- !u!114 &-335861898062939394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c360632d4510a074baef619f3210b541, type: 3}
+  m_Name: SR_CellNeightbours-[Props]
+  m_EditorClassIdentifier: 
+  Logic: 0
+  Negate: 0
+  Global: 0
+  Enabled: 1
+  Ignore: 0
+  _editor_drawRule: 1
+  CellAllow: 0
+  AllConditionsMet: 1
+  CheckedCellsMustBe: 2
+  NeightbourNeeds: 0
+  occupiedByTag: 
+  CheckMode: 0
+  DirectCheck: 0
+  OffsetOrigin: {x: 0, y: 0, z: 0}
+  placement:
+    lu: 0
+    u: 0
+    ru: 0
+    l: 0
+    m: 0
+    r: 0
+    ld: 0
+    d: 0
+    rd: 0
+    UseAdvancedSetup: 0
+    AdvancedSetup: []
+  quartRotor:
+    q1: 1
+    q2: 0
+    q3: 0
+    q4: 0
+  OverrideRotation: 1
+  initRotation: 0
+  rotorEff: 90
+  spawnOn: 5
+  EachRotor: 0
+  CustomRotors:
+  - 0
+  - 0
+  - 0
+  - 0
+  GetNeightbourPos: 0
+  GetNeightbourRot: 0
+  GetNeightbourScale: 0
+  UseRestrictedDir: 0
+  CustomCellsCheck: 0
+  FullRotGet: 0
+  Check3DAngles: 0
+  RotationSpaceDisplay: 0
+  CheckPosit90: 1
+  CheckNeg90: 1
+  OverridePitchRotation: 1
+  InitPitchRotation: 0
+  NotCheckDefaultPitch: 0
 --- !u!114 &-82441908579928721
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1229,13 +1546,11 @@ MonoBehaviour:
     allowTransformFollow: 0
     FloatSwitch: 0
   DoorsModificator: {fileID: 11400000, guid: 7500e28d48a8ac44da90dfc8719e91ef, type: 2}
-  EraseWallModificator: {fileID: 11400000, guid: c5bd286613ebcb24c932c8d5e7f79f9b,
-    type: 2}
+  EraseWallModificator: {fileID: 11400000, guid: c5bd286613ebcb24c932c8d5e7f79f9b, type: 2}
   CellsInstructions:
   - Title: Door Hole
     InstructionType: 1
-    TargetModification: {fileID: 11400000, guid: 7500e28d48a8ac44da90dfc8719e91ef,
-      type: 2}
+    TargetModification: {fileID: 11400000, guid: 7500e28d48a8ac44da90dfc8719e91ef, type: 2}
     Tags: Props
     InstructionArgument: 
     Foldout: 1
@@ -1243,8 +1558,7 @@ MonoBehaviour:
     extraPack: {fileID: 0}
   - Title: Clear Wall
     InstructionType: 3
-    TargetModification: {fileID: 11400000, guid: c5bd286613ebcb24c932c8d5e7f79f9b,
-      type: 2}
+    TargetModification: {fileID: 11400000, guid: c5bd286613ebcb24c932c8d5e7f79f9b, type: 2}
     Tags: 
     InstructionArgument: 
     Foldout: 1
@@ -1260,11 +1574,9 @@ MonoBehaviour:
   disabledMods: []
   CustomPostEvents: []
   AddReflectionProbes: 0
-  MainReflectionSettings: {fileID: 11400000, guid: dabe448206028124294db7edb02eed3f,
-    type: 2}
+  MainReflectionSettings: {fileID: 11400000, guid: dabe448206028124294db7edb02eed3f, type: 2}
   AddMultipleProbes: 0
-  SmallerReflSettings: {fileID: 11400000, guid: 290a908b3df7c6a4a84c21c932841cde,
-    type: 2}
+  SmallerReflSettings: {fileID: 11400000, guid: 290a908b3df7c6a4a84c21c932841cde, type: 2}
   MiniReflSettings: {fileID: 11400000, guid: b243a7973537dbf4faacf7bbda74dada, type: 2}
   SmallerReflLowerSpaceThan: 4
   LimitSingleProbeSize: 0
@@ -1321,7 +1633,7 @@ MonoBehaviour:
   Enabled: 1
   Ignore: 0
   _editor_drawRule: 1
-  CellAllow: 0
+  CellAllow: 1
   AllConditionsMet: 1
   Propability: 0.635
   PropabilityMulVariable:
@@ -1488,27 +1800,16 @@ MonoBehaviour:
   DrawObjectStamps: 1
   OMultiStamp: {fileID: 0}
   PrefabsList:
-  - Prefab: {fileID: 3741983813483016759, guid: c6abfb1ce2a33ec4ab92603059c8935d,
-      type: 3}
-    MainCollider: {fileID: 3425267810038068231, guid: c6abfb1ce2a33ec4ab92603059c8935d,
-      type: 3}
-    subID: 0
-    _refMesh: {fileID: 4300000, guid: e5ce5ac669ca0cd4c81e14e3cc32241b, type: 3}
-    _refCol: {fileID: 3425267810038068231, guid: c6abfb1ce2a33ec4ab92603059c8935d,
-      type: 3}
-  - Prefab: {fileID: 2130234204341472930, guid: 7dcf608f1c1348443b81d8440de96d0a,
-      type: 3}
-    MainCollider: {fileID: 4956032975060102162, guid: 7dcf608f1c1348443b81d8440de96d0a,
-      type: 3}
+  - Prefab: {fileID: 2130234204341472930, guid: 1dd5b520034345f47815d9ca4510ac43, type: 3}
+    MainCollider: {fileID: 4956032975060102162, guid: 1dd5b520034345f47815d9ca4510ac43, type: 3}
     subID: 0
     _refMesh: {fileID: 4300000, guid: 284066102bd5a7249a7384ce90e066d3, type: 3}
-    _refCol: {fileID: 4956032975060102162, guid: 7dcf608f1c1348443b81d8440de96d0a,
-      type: 3}
+    _refCol: {fileID: 4956032975060102162, guid: 1dd5b520034345f47815d9ca4510ac43, type: 3}
   DrawMultiObjectStamps: 1
   Spawners:
   - Enabled: 1
     Name: Floor base
-    SpawnerTag: f
+    SpawnerTag: 
     StampPrefabID: 0
     Parent: {fileID: 3465806144148339225}
     Rules:
@@ -1528,37 +1829,14 @@ MonoBehaviour:
     DisplayPreviewGUI: 1
     IsSubSpawner: 0
     _EditorDisplaySpawnerHeader: 1
-  - Enabled: 1
-    Name: Dark floor
-    SpawnerTag: dark floor
-    StampPrefabID: 14
-    Parent: {fileID: 3465806144148339225}
-    Rules:
-    - {fileID: 8864563546551923806}
-    - {fileID: 1182519149053022011}
-    Mode: 0
-    CellCheckMode: 0
-    _Editor_SpawnerAdvancedOptionsFoldout: 0
-    OnScalledGrid: 0
-    Repeat: 1
-    DontInheritRotations: 0
-    SwitchSpawnedToStatic: 0
-    MultipleToSpawn: 1
-    UseGlobalRules: 1
-    UseParentPackageRules: 1
-    _wasEnablingGlobalRules: 1
-    ScaleAccess: 1
-    DisplayPreviewGUI: 1
-    IsSubSpawner: 0
-    _EditorDisplaySpawnerHeader: 1
   SubSpawners: []
   VariantOf: {fileID: 0}
   _editor_drawStamp: 1
   _editor_drawSpawners: 1
   _editor_drawGlobalRules: 0
   _editor_drawModPackRules: 0
-  _editor_shareSelected: 1
-  ParentPreset: {fileID: 0}
+  _editor_shareSelected: 0
+  ParentPreset: {fileID: 11400000}
   ParentPack: {fileID: 7046276862784204607}
 --- !u!114 &3666790410240180975
 MonoBehaviour:
@@ -1818,59 +2096,21 @@ MonoBehaviour:
   DrawObjectStamps: 1
   OMultiStamp: {fileID: 0}
   PrefabsList:
-  - Prefab: {fileID: 0}
-    MainCollider: {fileID: 0}
+  - Prefab: {fileID: 2246754090751538134, guid: e3253a2b65a0b964a8069dfd6c489077, type: 3}
+    MainCollider: {fileID: 300189590033349271, guid: e3253a2b65a0b964a8069dfd6c489077, type: 3}
     subID: 0
-    _refMesh: {fileID: 4300000, guid: 5c87ca95556fc3f4ba9eb8dbd92ca18a, type: 3}
-    _refCol: {fileID: 0}
-  - Prefab: {fileID: 3404098539763603557, guid: 52063e4d289c8d64ab48951aba03a0a6,
-      type: 3}
-    MainCollider: {fileID: 2153175580760561492, guid: 52063e4d289c8d64ab48951aba03a0a6,
-      type: 3}
-    subID: 0
-    _refMesh: {fileID: 4300000, guid: 536fb54ec874b614d9505f33b05eb6b7, type: 3}
-    _refCol: {fileID: 2153175580760561492, guid: 52063e4d289c8d64ab48951aba03a0a6,
-      type: 3}
-  - Prefab: {fileID: 0}
-    MainCollider: {fileID: 0}
-    subID: 0
-    _refMesh: {fileID: 0}
-    _refCol: {fileID: 0}
+    _refMesh: {fileID: 4300000, guid: b26debc8e17dbba4bbba8af08b2d1988, type: 3}
+    _refCol: {fileID: 300189590033349271, guid: e3253a2b65a0b964a8069dfd6c489077, type: 3}
   DrawMultiObjectStamps: 1
   Spawners:
   - Enabled: 1
-    Name: Juggernog_low
-    SpawnerTag: Buy
-    StampPrefabID: 1
-    Parent: {fileID: 5880957986136469195}
-    Rules:
-    - {fileID: -684543983145808598}
-    - {fileID: 4684173292774324658}
-    Mode: 0
-    CellCheckMode: 0
-    _Editor_SpawnerAdvancedOptionsFoldout: 1
-    OnScalledGrid: 0
-    Repeat: 1
-    DontInheritRotations: 1
-    SwitchSpawnedToStatic: 0
-    MultipleToSpawn: 0
-    UseGlobalRules: 1
-    UseParentPackageRules: 1
-    _wasEnablingGlobalRules: 1
-    ScaleAccess: 1
-    DisplayPreviewGUI: 1
-    IsSubSpawner: 0
-    _EditorDisplaySpawnerHeader: 1
-  - Enabled: 1
-    Name: AmoBox_01 (2)
-    SpawnerTag: Ammo
+    Name: Buy Station
+    SpawnerTag: 
     StampPrefabID: 0
     Parent: {fileID: 5880957986136469195}
     Rules:
-    - {fileID: -82441908579928721}
-    - {fileID: -5548115530559554834}
-    - {fileID: -828471591230684413}
-    - {fileID: -2931010172797681483}
+    - {fileID: -4297141588334192879}
+    - {fileID: -5259241317057878490}
     Mode: 0
     CellCheckMode: 0
     _Editor_SpawnerAdvancedOptionsFoldout: 0
@@ -1892,8 +2132,8 @@ MonoBehaviour:
   _editor_drawSpawners: 1
   _editor_drawGlobalRules: 0
   _editor_drawModPackRules: 0
-  _editor_shareSelected: 1
-  ParentPreset: {fileID: 0}
+  _editor_shareSelected: 0
+  ParentPreset: {fileID: 11400000}
   ParentPack: {fileID: 7046276862784204607}
 --- !u!114 &6336305075113258982
 MonoBehaviour:

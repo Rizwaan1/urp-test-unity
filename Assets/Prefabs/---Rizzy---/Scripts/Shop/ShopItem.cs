@@ -1,3 +1,4 @@
+using cowsins;
 using UnityEngine;
 
 public class ShopItem : MonoBehaviour, IInteractable
@@ -29,6 +30,7 @@ public class ShopItem : MonoBehaviour, IInteractable
         if (purchaseManager == null)
         {
             Debug.LogError("PurchaseManager not found in the scene.");
+            //hoi
         }
     }
 

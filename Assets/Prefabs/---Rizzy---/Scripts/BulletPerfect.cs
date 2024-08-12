@@ -1,6 +1,7 @@
 using UnityEngine;
 using MoreMountains.Feedbacks;
 using Unity.Mathematics;
+using cowsins;
 
 public class BulletPerfect : MonoBehaviour
 {
@@ -58,11 +59,13 @@ public class BulletPerfect : MonoBehaviour
 
     void HandleCollision(Collision collision)
     {
+        // Controleer of de kogel een speler raakt
         if (forPlayer && collision.gameObject.CompareTag(PlayerTag))
         {
             ApplyDamageToPlayer(collision);
         }
 
+        // Controleer of de kogel een vijand of zombie raakt
         if (forEnemy)
         {
             if (collision.gameObject.CompareTag(EnemyTag))
@@ -73,6 +76,13 @@ public class BulletPerfect : MonoBehaviour
             {
                 ApplyDamageToZombie(collision);
             }
+        }
+
+        // Controleer of de kogel een crate raakt
+        Crate crate = collision.gameObject.GetComponent<Crate>();
+        if (crate != null)
+        {
+            crate.Die(); // Roep de Die() methode aan van het Crate script
         }
 
         onHit?.PlayFeedbacks();

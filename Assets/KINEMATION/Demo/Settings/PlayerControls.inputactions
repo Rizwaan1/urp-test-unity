@@ -166,6 +166,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "97eb201e-7549-4a90-b4eb-46b0d72c5266",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -282,7 +291,7 @@
                 {
                     "name": "",
                     "id": "2ffaf32f-a733-401b-aa6d-29a88a4e4b53",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/comma",
                     "interactions": "",
                     "processors": "Scale",
                     "groups": "",
@@ -293,7 +302,7 @@
                 {
                     "name": "",
                     "id": "c486dae7-4e89-4ac3-9dca-4cc6e2f86e21",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/period",
                     "interactions": "",
                     "processors": "Scale(factor=-1)",
                     "groups": "",
@@ -573,6 +582,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ToggleAttachmentEditing",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9747906c-ad7e-4ba2-85dc-64cd025c00d0",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
