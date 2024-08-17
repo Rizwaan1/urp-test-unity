@@ -3,12 +3,19 @@ using UnityEngine.UI;
 
 public class MoneyManager : MonoBehaviour
 {
-    public float PlayerMoney = 1000f;  // Beginbedrag van de speler
-    public Text moneyText;  // UI-tekst om het geld weer te geven
+    public float PlayerMoney = 1000f;  // Player's starting money
+    private Text activeMoneyText;  // Reference to the currently active UI Text component
 
     private void Start()
     {
+        // Initial update for the money display
         UpdateMoneyUI();
+    }
+
+    public void SetActiveMoneyText(Text moneyText)
+    {
+        activeMoneyText = moneyText;
+        UpdateMoneyUI();  // Update the UI whenever the active text is changed
     }
 
     public void AddMoney(float amount)
@@ -32,11 +39,11 @@ public class MoneyManager : MonoBehaviour
         }
     }
 
-    private void UpdateMoneyUI()
+    public void UpdateMoneyUI()
     {
-        if (moneyText != null)
+        if (activeMoneyText != null)
         {
-            moneyText.text = "Money: $" + PlayerMoney.ToString("F2");
+            activeMoneyText.text = "Money: $" + PlayerMoney.ToString("F2");
         }
     }
 }

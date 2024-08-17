@@ -168,9 +168,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact",
+                    "name": "OpenInventory5",
                     "type": "Button",
-                    "id": "97eb201e-7549-4a90-b4eb-46b0d72c5266",
+                    "id": "c695fd08-7b52-4ad2-b940-a852540c4f71",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -587,12 +587,12 @@
                 },
                 {
                     "name": "",
-                    "id": "9747906c-ad7e-4ba2-85dc-64cd025c00d0",
-                    "path": "<Keyboard>/e",
+                    "id": "3423f0e1-3e99-4f5c-9041-a2ec99ed274e",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interact",
+                    "action": "OpenInventory5",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
